@@ -28,9 +28,7 @@ class App extends Component {
             Learn React
           </a>
         </header>
-        <p className="App-intro">;{this.state.apiResponse}</p>
-        <p className="App-intro">;{this.state.apiResponse}</p>
-        <p className="App-intro">;{this.state.apiResponse}</p>
+        <p className="App-intro">{this.state.apiResponse}</p>
       </div>
     );
   }
