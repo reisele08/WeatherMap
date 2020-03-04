@@ -4,29 +4,19 @@ import MaterialTable from 'material-table';
 export default function MaterialTableDemo() {
     const [state, setState] = React.useState({
       columns: [
+        { title: 'Username', field: 'username' },
         { title: 'Name', field: 'name' },
-        { title: 'Surname', field: 'surname' },
-        { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-        {
-          title: 'Birth Place',
-          field: 'birthCity',
-          lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-        },
+        { title: 'Email', field: 'email'},
       ],
       data: [
-        { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-        {
-          name: 'Zerya Betül',
-          surname: 'Baran',
-          birthYear: 2017,
-          birthCity: 34,
-        },
+        { username: 'John324', name: 'John', email: 'J123@gmail.com'},
+        { username: 'Jill1991', name: 'Jill', email: 'Jill2910@gmail.com'},
       ],
     });
   
     return (
       <MaterialTable
-        title="Editable Example"
+        title="All Users"
         columns={state.columns}
         data={state.data}
         editable={{
