@@ -1,5 +1,69 @@
 import React from 'react';
 import MaterialTable from 'material-table';
+import axios from 'axios';
+/*
+class UserList extends component{
+  constructor(props) {
+    super(props);
+    this.state = {
+        columns: [],
+        data: []
+    }
+  }
+
+  componentDidMount() {
+    this.getUserList()
+    this.timer = setInterval(() => this.getUserList(), 10000);
+    this.setState({
+        columns: [
+            {title: 'Username', field: 'username'},
+            {title: 'Name', field: 'name'},
+            {title: 'Email', field: 'email'},
+        ],
+        Data: [
+            {
+                username: 'Loading',
+                name: 'Loading',
+                email: 'Loading',
+            }
+        ]
+    })
+}
+
+getUserList = () => {
+  fetch('http://localhost:3001/api/getData')
+    .then((data) => data.json())
+    .then((res) => this.setState({ data: res.data }));
+};
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
+
+    populateData(response) {
+        console.log(response)
+        var userList = []
+        response.forEach(user => {
+            var name = (user.name)[0]
+            var username = user.username[0]
+            var email = user.email
+
+            var user_obj = {
+                name: name,
+                username: username,
+                email: email,
+            }
+
+            userList.push(user_obj)
+        });
+
+        this.setState({data: userList})
+
+    }
+}
+*/
+
 
 export default function MaterialTableDemo() {
     const [state, setState] = React.useState({

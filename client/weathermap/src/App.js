@@ -32,7 +32,7 @@ class App extends Component {
                   <Navigation>
                       <Link to = "/">Home</Link>
                       <Link to="/login">Login</Link>
-                      <Link to="/UserList">UserList</Link>
+                      <Link to="/UserList">Admin Page</Link>
                       <Link to="/contact">Contact</Link>
                   </Navigation>
               </Header>
