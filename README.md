@@ -23,7 +23,7 @@ cd server
 
 npm start
 
-cd ../client
+cd ../client/weathermap
 
 npm install
 
