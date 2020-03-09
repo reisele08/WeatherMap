@@ -1,6 +1,9 @@
 import React from 'react';
+import './Form.css';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
+import {Link} from "react-router-dom";
 
 
 class Login extends React.Component {
@@ -22,7 +25,7 @@ class Login extends React.Component {
 
     handleSubmit = async () => {
         //input validation
-        //access to db and check if the inputs are correct or not 
+        //access to db and check if the inputs are correct or not
         // if the matching account does not exist - show error msg
         // if it exists - go to the dashboard
 
@@ -33,11 +36,18 @@ class Login extends React.Component {
 
     render(){
         return(
-            <div>
+            <div className="newForm">
+
                 <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}
+                    style={{
+                        backgroundColor: 'white',
+                            margin : 'auto',
+                            padding : '20px',
+                            textAlign: 'center'
+                    }}
                 >
                     <TextValidator
                         label="Username"
@@ -60,12 +70,15 @@ class Login extends React.Component {
                         errorMessages={['this field is required']}
                         variant="outlined"
                     />
-                    
+
                     <br/>
                     <br/>
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" style={{backgroundColor: 'rgba(0,0,0, 0.87)', color: 'white', margin:'10px'}}>Submit</Button>
+                    <Button style={{backgroundColor: 'rgba(0,0,0, 0.87)'}}><Link to="/SignUp" style={{ color: 'white'}}>SignUp</Link></Button>
+
                     <br/>
                 </ValidatorForm>
+
             </div>
         )
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Form.css';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
@@ -29,7 +30,7 @@ class SignUp extends React.Component {
 
         //Need to add some validator for username
         ValidatorForm.addValidationRule('checkUsername', (value) => {
-            
+
             return true;
         });
 
@@ -49,10 +50,17 @@ class SignUp extends React.Component {
     render() {
         return (
             <div className="newForm">
+
                 <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}
+                    style={{
+                        backgroundColor: 'white',
+                            margin : 'auto',
+                            padding : '20px',
+                            textAlign: 'center'
+                    }}
                 >
                     <TextValidator
                         label="First Name"
@@ -97,12 +105,13 @@ class SignUp extends React.Component {
                         errorMessages={['this field is required']}
                         variant="outlined"
                     />
-                    
+
                     <br/>
                     <br/>
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" style={{backgroundColor: 'rgba(0,0,0, 0.87)', color: 'white'}}>Submit</Button>
                     <br/>
                 </ValidatorForm>
+
             </div>
         );
     }
