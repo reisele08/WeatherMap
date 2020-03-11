@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import UserList from './components/UserList'
+import Login from './components/form/Login'
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import Main from './components/main';
 import {Link} from 'react-router-dom';
@@ -31,8 +32,13 @@ class App extends Component {
               <Header className = "header-color" title = "Title">
                   <Navigation>
                       <Link to = "/">Home</Link>
+<<<<<<< HEAD
                       <Link to="/login">Login</Link>
                       <Link to="/UserList">Admin Page</Link>
+=======
+                      <Link to="/Login">Login</Link>
+                      <Link to="/UserList">UserList</Link>
+>>>>>>> c9f2eaa720cc6c4b426909ca45be6fa4bd3f43e2
                       <Link to="/contact">Contact</Link>
                   </Navigation>
               </Header>
