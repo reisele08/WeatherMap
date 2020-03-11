@@ -13,15 +13,27 @@ const Role = {
 class SignUp extends React.Component {
     constructor(props) {
         super(props)
+        // This part is for testing purpose
+        // this.state = {
+        //     id: '',
+        //     username: 'test1',
+        //     password: 'test',
+        //     name: '',
+        //     fname: 'gaeun',
+        //     lname: 'lee',
+        //     email: 'gaeunl@sfu.ca',
+        //     repeatPassword:'test',
+        //     role: Role.USER
+        // };
         this.state = {
             id: '',
-            username: 'test1',
-            password: 'test',
+            username: '',
+            password: '',
             name: '',
-            fname: 'gaeun',
-            lname: 'lee',
-            email: 'gaeunl@sfu.ca',
-            repeatPassword:'test',
+            fname: '',
+            lname: '',
+            email: '',
+            repeatPassword:'',
             role: Role.USER
         };
         this.handleChange = this.handleChange.bind(this);
