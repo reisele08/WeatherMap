@@ -1,49 +1,129 @@
-const mongoose = require('mongoose');
-var GeoJSON = require('mongoose-geojson-schema');
-const Schema = mongoose.Schema;
-
-// Create Schema
-const PostSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users'
-  },
-
-  location: {
-     
-    coordinates: [Number,Number],
-  },
-  name: {
-    type: String
-  },
-   
+const postsCollection = require('../db').db().collection("posts")
  
-  comments: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
-      },
-      text: {
-        type: String,
-        required: true
-      },
-      name: {
-        type: String
-      },
-      avatar: {
-        type: String
-      },
-      date: {
-        type: Date,
-        default: Date.now
-      }
-    }
-  ],
-  date: {
-    type: Date,
-    default: Date.now
-  }
-});
+const ObjectID = require('mongodb').ObjectID
+const User = require('./User')
+ 
 
-module.exports = Post = mongoose.model('post', PostSchema);
+let Post = function(data, userid, requestedPostId) {
+  this.data = data
+  this.errors = []
+  this.userid = userid
+  this.requestedPostId = requestedPostId
+}
+ 
+Post.prototype.validate = function() {
+  if (this.data.title == "") {this.errors.push("You must provide a title.")}
+  if (this.data.body == "") {this.errors.push("You must provide post content.")}
+}
+
+Post.prototype.create = function() {
+  return new Promise((resolve, reject) => {
+  
+    this.validate()
+    if (!this.errors.length) {
+       
+      postsCollection.insertOne(this.data).then((info) => {
+        resolve(info.ops[0]._id)
+      }).catch(() => {
+        this.errors.push("Please try again later.")
+        reject(this.errors)
+      })
+    } else {
+      reject(this.errors)
+    }
+  })
+}
+
+Post.prototype.update = function() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let post = await Post.findSingleById(this.requestedPostId, this.userid)
+      if (post.isVisitorOwner) {
+        // actually update the db
+        let status = await this.actuallyUpdate()
+        resolve(status)
+      } else {
+        reject()
+      }
+    } catch {
+      reject()
+    }
+  })
+}
+ 
+Post.reusablePostQuery = function(uniqueOperations, visitorId) {
+  return new Promise(async function(resolve, reject) {
+    let aggOperations = uniqueOperations.concat([
+      {$lookup: {from: "users", localField: "author", foreignField: "_id", as: "authorDocument"}},
+      {$project: {
+        title: 1,
+        body: 1,
+        createdDate: 1,
+        authorId: "$author",
+        author: {$arrayElemAt: ["$authorDocument", 0]}
+      }}
+    ])
+
+    let posts = await postsCollection.aggregate(aggOperations).toArray()
+
+    // clean up author property in each post object
+    posts = posts.map(function(post) {
+      post.isVisitorOwner = post.authorId.equals(visitorId)
+      post.authorId = undefined
+
+      post.author = {
+        username: post.author.username,
+        
+      }
+
+      return post
+    })
+
+    resolve(posts)
+  })
+}
+
+Post.findSingleById = function(id, visitorId) {
+  return new Promise(async function(resolve, reject) {
+    if (typeof(id) != "string" || !ObjectID.isValid(id)) {
+      reject()
+      return
+    }
+    
+    let posts = await Post.reusablePostQuery([
+      {$match: {_id: new ObjectID(id)}}
+    ], visitorId)
+
+    if (posts.length) {
+      console.log(posts[0])
+      resolve(posts[0])
+    } else {
+      reject()
+    }
+  })
+}
+
+Post.findByAuthorId = function(authorId) {
+  return Post.reusablePostQuery([
+    {$match: {author: authorId}},
+    {$sort: {createdDate: -1}}
+  ])
+}
+
+Post.delete = function(postIdToDelete, currentUserId) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let post = await Post.findSingleById(postIdToDelete, currentUserId)
+      if (post.isVisitorOwner) {
+        await postsCollection.deleteOne({_id: new ObjectID(postIdToDelete)})
+        resolve()
+      } else {
+        reject()
+      }    
+    } catch {
+      reject()
+    }
+  })
+}
+ 
+module.exports = Post
