@@ -32,13 +32,8 @@ class App extends Component {
               <Header className = "header-color" title = "Title">
                   <Navigation>
                       <Link to = "/">Home</Link>
-<<<<<<< HEAD
                       <Link to="/login">Login</Link>
                       <Link to="/UserList">Admin Page</Link>
-=======
-                      <Link to="/Login">Login</Link>
-                      <Link to="/UserList">UserList</Link>
->>>>>>> c9f2eaa720cc6c4b426909ca45be6fa4bd3f43e2
                       <Link to="/contact">Contact</Link>
                   </Navigation>
               </Header>
