@@ -3,6 +3,10 @@ const app = express();
 const port = process.env.PORT || 9000;
 const connectDB = require('./DB/Connection');
 const cors = require("cors");
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const userRouter = require('./Api/routes/Users');
+
 require('dotenv/config');
 
 let testAPIRouter = require("./routes/testAPI");
@@ -11,8 +15,29 @@ app.set('port',port);
 
 //Middlewares
 app.use(cors());
-app.use(express.json({ extended: false }));
-app.use('/api/userModel', require('./Api/User'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use('/users', userRouter);
+
+//For not found
+app.use((req, res, next) => {
+	const error = new Error('Not found');
+	error.status = 404;
+	next(error);
+});
+
+//For any other type error
+app.use((error, req, res, next) => {
+	res.status(error.status || 500).json({
+		error: {
+			message: error.message
+		}
+	});
+});
+
+
+// app.use(express.json({ extended: false }));
+// app.use('/api/userModel', require('./Api/models/User'));
 // app.use('/authentication', () => {
 //     console.log('Some authentication function can be placed here');
 // });

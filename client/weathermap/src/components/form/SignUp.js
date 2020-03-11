@@ -2,19 +2,27 @@ import React from 'react';
 import './Form.css';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import RequestServer from "../RequestServer";
 
 
+const Role = {
+    ADMIN: "ADMIN",
+    USER: "USER"
+}
 
 class SignUp extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             id: '',
-            username: '',
-            password: '',
+            username: 'test1',
+            password: 'test',
             name: '',
-            fname: '',
-            lname: '',
+            fname: 'gaeun',
+            lname: 'lee',
+            email: 'gaeunl@sfu.ca',
+            repeatPassword:'test',
+            role: Role.USER
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -30,10 +38,28 @@ class SignUp extends React.Component {
 
         //Need to add some validator for username
         ValidatorForm.addValidationRule('checkUsername', (value) => {
+            let valid = this.checkUsername(value)
+                .catch(() => {
+                    return true;
+                });
+            return valid;
+        });
 
+        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+            if (value !== this.state.password) {
+                return false;
+            }
             return true;
         });
 
+    }
+
+    async checkUsername(username) {
+        var response = await RequestServer.getByUsername(username);
+        if (response === null) {
+            return true;
+        }
+        return false;
     }
 
     handleSubmit = async () => {
@@ -41,7 +67,16 @@ class SignUp extends React.Component {
         this.setState({
             name: this.state.fname + ' ' + this.state.lname,
         })
-
+        var response = await RequestServer.addUser(this.state);
+        if(response === null){
+            alert( 'Incorrect Inputs' )
+        }else{
+            console.log(response)
+            this.props.history.push(
+                '/login',
+                { detail: response.data }
+            )
+        }
     }
 
 
@@ -50,7 +85,6 @@ class SignUp extends React.Component {
     render() {
         return (
             <div className="newForm">
-
                 <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
@@ -104,10 +138,31 @@ class SignUp extends React.Component {
                         validators={['required']}
                         errorMessages={['this field is required']}
                         variant="outlined"
-                    />
+                    /> <br/> <br/>
+                    <TextValidator
+                        label="Repeat password"
+                        onChange={this.handleChange}
+                        name="repeatPassword"
+                        value={this.state.repeatPassword}
+                        type="password"
+                        validators={['isPasswordMatch', 'required']}
+                        errorMessages={['password mismatch', 'this field is required']}
+                        variant="outlined"
+                        />
+                    <br/>
+                    <br/>
+                     <TextValidator
+                        label="Email"
+                        onChange={this.handleChange}
+                        name="email"
+                        value={this.state.email}
+                        validators={['required', 'isEmail']}
+                        errorMessages={['this field is required', 'email is not valid']}
+                        variant="outlined"
+                            />
 
-                    <br/>
-                    <br/>
+                            <br/>
+                            <br/>
                     <Button type="submit" style={{backgroundColor: 'rgba(0,0,0, 0.87)', color: 'white'}}>Submit</Button>
                     <br/>
                 </ValidatorForm>

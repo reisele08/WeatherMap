@@ -31,6 +31,14 @@ npm start
 ```
 Navigate to http://localhost:3000/
 
+
+** TEST DB **
+```
+    use postman
+        select post request
+        url: http://localhost:9000/api/userModel
+```
+
 **Group Members**
     
     Daniel Jui-Che Lin, djlin@sfu.ca
