@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import UserList from './components/UserList'
 import Login from './components/form/Login'
+import postIcons from './components/post/postIcon'
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import Main from './components/main';
 import {Link} from 'react-router-dom';
@@ -39,7 +40,7 @@ class App extends Component {
               </Header>
               <Drawer className = "drawer-color" title= "Drawer Title">
                   <Navigation>
-                      <Link to="/resume">Link</Link>
+                      <Link to="/Post">Link</Link>
                       <Link to="/aboutme">Link</Link>
                       <Link to="/projects">Link</Link>
                       <Link to="/contact">Link</Link>
