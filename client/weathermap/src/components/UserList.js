@@ -132,8 +132,4 @@ export default function MaterialTableDemo() {
     );
   }
 }
-<<<<<<< HEAD
   export default UserList;
-=======
-  export default UserList;
->>>>>>> 5f22aeb819cc7fa1547e1a2ef2a9d11d6933f861
