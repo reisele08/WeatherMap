@@ -14,8 +14,8 @@ class App extends Component {
               <Header className = "header-color" title = "Title">
                   <Navigation>
                       <Link to = "/">Home</Link>
-                      <Link to="/Login">Login</Link>
-                      <Link to="/UserList">UserList</Link>
+                      <Link to="/login">Login</Link>
+                      <Link to="/UserList">Admin Page</Link>
                       <Link to="/contact">Contact</Link>
                   </Navigation>
               </Header>
