@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
+import UserList from './components/UserList'
+import Login from './components/form/Login'
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import RouterTable from './components/RouterTable';
 import {Link} from 'react-router-dom';
@@ -12,7 +14,7 @@ class App extends Component {
               <Header className = "header-color" title = "Title">
                   <Navigation>
                       <Link to = "/">Home</Link>
-                      <Link to="/login">Login</Link>
+                      <Link to="/Login">Login</Link>
                       <Link to="/UserList">UserList</Link>
                       <Link to="/contact">Contact</Link>
                   </Navigation>
