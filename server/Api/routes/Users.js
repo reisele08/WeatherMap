@@ -6,7 +6,16 @@ const User = require('../models/UserModel');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
 //http://localhost:8000/users/
+//raw, json - {
+//         "name": "name",
+//         "username": "username2",
+//         "password": "password",
+//         "email": "email",
+//         "role": "USER"
+//     }
+
 router.get('/', (req, res, next) => {
     User.find()
         .exec()
@@ -41,14 +50,6 @@ router.get('/login/:username/:password', (req, res, next) => {
 
 });
 
-//http://localhost:8000/users/
-    //raw, json - {
-    //         "name": "name",
-    //         "username": "username2",
-    //         "password": "password",
-    //         "email": "email",
-    //         "role": "USER"
-    //     }
 
 router.post('/', (req, res, next) => {
     const hashedPW = bcrypt.hashSync(req.body.password, saltRounds);
@@ -70,7 +71,16 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.delete('/:id', (req, res, next) => {
+//users/update
+//updateOne({ _id: doc._id }, { $set: { name: 'foo' } })`
+router.post('/update/', (req, res, next) => {
+    User.updateOne({username:req.body.username}, { $set:{role: req.body.role }})
+        .exec()
+        .then(user =>  res.status(200).json({ message: 'Update Successful', user:user}))
+        .catch(err =>  res.status(500).json({ error: err }))
+});
+
+router.delete('/delete/:id', (req, res, next) => {
     const id = req.params.id;
     User.remove({ _id: id })
         .exec()

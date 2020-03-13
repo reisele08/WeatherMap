@@ -17,10 +17,10 @@ class UserList extends Component{
     this.timer = setInterval(() => this.getUserList(), 10000);
     this.setState({
         columns: [
-            {title: 'Username', field: 'username'},
-            {title: 'Name', field: 'name'},
-            {title: 'Email', field: 'email'},
-            {title: 'Role', field: 'role'},
+            {title: 'Username', field: 'username', editable: 'never'},
+            {title: 'Name', field: 'name', editable: 'never'},
+            {title: 'Email', field: 'email', editable: 'never'},
+            {title: 'Role', field: 'role', lookup: { 'USER': 'USER', 'ADMIN': 'ADMIN' },},
         ],
         Data: [
             {
@@ -53,8 +53,10 @@ async getUserList() {
             var username = user.username
             var email = user.email
             var role = user.role
+            var id = user._id
 
             var user_obj = {
+                id: id,
                 name: name,
                 username: username,
                 email: email,
@@ -68,6 +70,21 @@ async getUserList() {
 
     }
 
+    async deleteUser(user) {
+        let response = await requestServer.deleteUser(user.id)
+        if (response !== null) {
+            return true
+        }
+        return false
+    }
+
+    async updateUser(user) {
+      let response = await requestServer.updateUser(user)
+      if (response !== null){
+          return true
+      }
+      return false
+    }
 
 /*
 export default function MaterialTableDemo() {
@@ -90,24 +107,30 @@ export default function MaterialTableDemo() {
         columns={this.state.columns}
         data={this.state.data}
         editable={{
-          /*
-          onRowAdd: newData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.push(newData);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            }),
+         isEditable: rowData => rowData.role === "USER", // only name(a) rows would be editable
+         isDeletable: rowData => rowData.role === "USER", // only name(a) rows would be deletable
+
+             /*
+             onRowAdd: newData =>
+               new Promise(resolve => {
+                 setTimeout(() => {
+                   resolve();
+                   setState(prevState => {
+                     const data = [...prevState.data];
+                     data.push(newData);
+                     return { ...prevState, data };
+                   });
+                 }, 600);
+               }),
+
+              */
           onRowUpdate: (newData, oldData) =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                if (oldData) {
-                  setState(prevState => {
+                var didUpdate = this.updateUser(newData);
+                if (didUpdate) {
+                  this.setState(prevState => {
                     const data = [...prevState.data];
                     data[data.indexOf(oldData)] = newData;
                     return { ...prevState, data };
@@ -115,18 +138,21 @@ export default function MaterialTableDemo() {
                 }
               }, 600);
             }),
+
           onRowDelete: oldData =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            }),
-            */
+                var didDelete = this.deleteUser(oldData);
+                if(didDelete){
+                    this.setState(prevState => {
+                        const data = [...prevState.data];
+                        data.splice(data.indexOf(oldData), 1);
+                        return { ...prevState, data };
+                    });
+                }
+              }, 700);
+            })
         }}
       />
     );

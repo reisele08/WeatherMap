@@ -35,8 +35,8 @@ class Login extends React.Component {
             alert( 'Incorrect Inputs' )
         }else{
             this.props.history.push(
-                '/',
-                { detail: response.data }
+                '/profile',
+                { detail: response.data.user }
             )
         }
 

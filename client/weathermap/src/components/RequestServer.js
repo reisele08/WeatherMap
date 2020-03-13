@@ -61,12 +61,23 @@ class RequestServer extends Component {
 
     async deleteUser(id) {
         try {
-            var response = await axios.delete(this.getServerLocation() + '/users/' + id)
+            var response = await axios.delete(this.getServerLocation() + '/users/delete/' + id)
             return response
         } catch (error) {
             console.log(error)
             return null
         }
+    }
+
+    async updateUser(user){
+        try {
+            var response = await axios.post(this.getServerLocation() + '/users/update/', user)
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+
     }
 
 
