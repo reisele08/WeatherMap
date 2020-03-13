@@ -1,11 +1,11 @@
 import React, {Component, Fragment} from 'react';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 
-// Temporary retrieving data from local file. Need to hook this up to get from PredictHQ API
+// TODO: Temporary retrieving data from local file. Need to hook this up to get from PredictHQ API
 import { data } from './TempData.js';
 
 
-/* Data Types */
+// Types
 type Position = [number, number]
 
 type Props = {|
@@ -34,9 +34,8 @@ const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
 
 // React Component
 class Landing extends Component<{}, State> {
-  // Retrieve PredictHQ API data
+  // TODO: Retrieve PredictHQ API data
   getData() {
-    // Do something
     let markerList = [];
     let results = data.results;
     let counter = 0;
