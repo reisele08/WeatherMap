@@ -70,7 +70,7 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
     const id = req.params.id;
     User.remove({ _id: id })
         .exec()

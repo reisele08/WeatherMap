@@ -53,8 +53,10 @@ async getUserList() {
             var username = user.username
             var email = user.email
             var role = user.role
+            var id = user._id
 
             var user_obj = {
+                id: id,
                 name: name,
                 username: username,
                 email: email,
@@ -68,6 +70,13 @@ async getUserList() {
 
     }
 
+    async deleteUser(user) {
+        let response = await requestServer.deleteUser(user.id)
+        if (response !== null) {
+            return true
+        }
+        return false
+    }
 
 /*
 export default function MaterialTableDemo() {
@@ -102,12 +111,14 @@ export default function MaterialTableDemo() {
                 });
               }, 600);
             }),
+
+           */
           onRowUpdate: (newData, oldData) =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
                 if (oldData) {
-                  setState(prevState => {
+                  this.setState(prevState => {
                     const data = [...prevState.data];
                     data[data.indexOf(oldData)] = newData;
                     return { ...prevState, data };
@@ -115,18 +126,21 @@ export default function MaterialTableDemo() {
                 }
               }, 600);
             }),
+
           onRowDelete: oldData =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
+                var didDelete = this.deleteUser(oldData);
+                if(didDelete){
+                    this.setState(prevState => {
+                        const data = [...prevState.data];
+                        data.splice(data.indexOf(oldData), 1);
+                        return { ...prevState, data };
+                    });
+                }
               }, 600);
-            }),
-            */
+            })
         }}
       />
     );
