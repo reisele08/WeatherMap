@@ -14,12 +14,9 @@ git clone https://csil-git1.cs.surrey.sfu.ca/gaeunl/weathermap.git
 
 cd weathermap
 
-npm install
-```
-
-**Running App**
-```
 cd server
+
+npm install
 
 npm start
 
