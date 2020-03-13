@@ -69,6 +69,17 @@ class RequestServer extends Component {
         }
     }
 
+    async updateUser(user){
+        try {
+            var response = await axios.post(this.getServerLocation() + '/users/update/', user)
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+
+    }
+
 
 
 }

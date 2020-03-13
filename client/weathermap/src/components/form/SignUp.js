@@ -85,8 +85,7 @@ class SignUp extends React.Component {
         }else{
             console.log(response)
             this.props.history.push(
-                '/login',
-                { detail: response.data }
+                '/login'
             )
         }
     }
