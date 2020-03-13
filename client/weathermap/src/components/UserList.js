@@ -13,7 +13,7 @@ class UserList extends Component{
   }
 
   componentDidMount() {
-    this.getUserList()
+    this.getUserList();
     this.timer = setInterval(() => this.getUserList(), 10000);
     this.setState({
         columns: [
@@ -34,7 +34,7 @@ class UserList extends Component{
 }
 
 async getUserList() {
-  var passback = await requestServer.getUsers()
+  var passback = await requestServer.getUsers();
   if (passback !== null) {
       this.populateData(passback.data)
   }
