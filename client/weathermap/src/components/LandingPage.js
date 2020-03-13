@@ -1,9 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-
-// TODO: Temporary retrieving data from local file. Need to hook this up to get from PredictHQ API
-import { data } from './TempData.js';
-
+import axios from 'axios';
+import requestData from './RequestData';
 
 // Types
 type Position = [number, number]
@@ -35,7 +33,8 @@ const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
 // React Component
 class Landing extends Component<{}, State> {
   // TODO: Retrieve PredictHQ API data
-  getData() {
+
+  updateMarkers(data) {
     let markerList = [];
     let results = data.results;
     let counter = 0;
@@ -57,11 +56,22 @@ class Landing extends Component<{}, State> {
     );
   }
 
-  componentDidMount() {
-    this.getData();
+  async getDataAPI() {
+    var response = await requestData.getData();
+    if (response !== null) {
+        this.updateMarkers(response.data);
+    }
   }
 
-  state = {};
+  componentDidMount() {
+    this.getDataAPI();
+  }
+
+  state = {
+    markers: [
+      {key: "temp", location: [0,0], content: "temp"}
+    ]
+  };
 
   render(){
     const position = [this.state.lat, this.state.lng];
