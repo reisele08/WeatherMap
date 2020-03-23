@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import UserList from './components/UserList'
-import Login from './components/form/Login'
-import Profile from './components/Profile'
-import Logout from './components/Logout'
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import RouterTable from './components/RouterTable';
 import {Link} from 'react-router-dom';
@@ -12,9 +8,8 @@ import UserNavigation from './components/UserNavigation'
 import LoggedOutNavigation from './components/LoggedOutNavigation'
 
 class App extends Component {
-
+    
     loginNavigation() {
-
         if ((localStorage.getItem('isAdmin') === 'true') && localStorage.getItem('loggedIn') === 'true') {
             return (                  
                 <AdminNavigation/>      
@@ -35,7 +30,7 @@ class App extends Component {
     return (
       <div>
           <Layout>
-              <Header className = "header-color" title = "Title">
+              <Header className = "header-color" title = "Weather Map">
               {this.loginNavigation()}
 
                   {/* <Navigation>
@@ -45,10 +40,10 @@ class App extends Component {
                       <Link to="/Profile">Profile</Link>
                   </Navigation> */}
               </Header>
-              <Drawer className = "drawer-color" title= "Drawer Title">
+              <Drawer className = "drawer-color" title= "Options">
                   <Navigation>
-                      <Link to="/link2">Link</Link>
-                      <Link to="/link3">Link</Link>
+                      <Link to="/link2">Empty Link</Link>
+                      <Link to="/link3">Empty Link</Link>
                       <Link to="/Profile">Profile</Link>
                       <Link to="/Logout">Logout</Link>
                   </Navigation>
