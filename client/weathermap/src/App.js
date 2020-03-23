@@ -6,19 +6,37 @@ import Profile from './components/Profile'
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import RouterTable from './components/RouterTable';
 import {Link} from 'react-router-dom';
+import AdminNavigation from './components/AdminNavigation'
+import UserNavigation from './components/UserNavigation'
 
 class App extends Component {
+
+    loginNavigation() {
+
+        if (localStorage.getItem('userData') === 'ADMIN') {
+            return (                  
+                <AdminNavigation/>      
+            )
+        } 
+        else {
+            return (                        
+                <UserNavigation/>
+            )
+        }
+    }
   render() {
     return (
       <div>
           <Layout>
               <Header className = "header-color" title = "Title">
-                  <Navigation>
+              {this.loginNavigation()}
+
+                  {/* <Navigation>
                       <Link to = "/">Home</Link>
                       <Link to="/login">Login</Link>
                       <Link to="/UserList">Admin Page</Link>
                       <Link to="/Profile">Profile</Link>
-                  </Navigation>
+                  </Navigation> */}
               </Header>
               <Drawer className = "drawer-color" title= "Drawer Title">
                   <Navigation>
