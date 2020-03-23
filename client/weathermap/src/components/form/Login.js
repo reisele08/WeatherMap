@@ -26,6 +26,9 @@ class Login extends React.Component {
             localStorage.setItem("isAdmin", "true")
         }
         else if(response.data.user.role === 'USER'){
+            this.setState({
+                isAdmin: false
+            })
             localStorage.setItem("isAdmin", "false")
         }
 }
@@ -41,7 +44,6 @@ class Login extends React.Component {
 
         console.log("User data is : " + user)
         console.log("response from server: ", response, this.state)
-        console.log("decomposing response: ", response.data.name, " ", response.data.role, response.status)
         console.log("ROLE: " + response.data.user.role)
         console.log("admin??: " + admin)
 
@@ -58,15 +60,14 @@ class Login extends React.Component {
         }else{
             localStorage.setItem("userData", JSON.stringify(response.data))
             //localStorage.setItem("isAdmin", "false")
-
             this.setRole(response)
-
             this.testConsoleLog(response)
-
             this.props.history.push(
                 '/profile',
                 { detail: response.data.user }
             )
+            window.location.reload()
+
         }
 
 
