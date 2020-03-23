@@ -5,10 +5,9 @@ import {Link} from 'react-router-dom';
 export default function AdminNavigation() {
     return (
         <Navigation>
-                      <Link to = "/">Home</Link>
-                      <Link to="/login">Login</Link>
-                      <Link to="/UserList">Admin Page</Link>
-                      <Link to="/Profile">Profile</Link>
+            <Link to = "/">Home</Link>
+            <Link to="/UserList">Admin Page</Link>
+            <Link to="/Profile">Profile</Link>
         </Navigation>
     )
 }

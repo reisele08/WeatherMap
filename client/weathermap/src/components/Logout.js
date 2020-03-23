@@ -1,7 +1,6 @@
 
 
 function Logout(props) {
-
     const logout = () => {
     if(localStorage.getItem('loggedIn') === 'true'){
         localStorage.setItem("loggedIn", "false")
@@ -13,6 +12,5 @@ function Logout(props) {
 return (
     logout()
 );
-
 }
 export default Logout;

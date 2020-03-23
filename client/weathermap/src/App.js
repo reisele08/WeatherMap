@@ -9,6 +9,7 @@ import RouterTable from './components/RouterTable';
 import {Link} from 'react-router-dom';
 import AdminNavigation from './components/AdminNavigation'
 import UserNavigation from './components/UserNavigation'
+import LoggedOutNavigation from './components/LoggedOutNavigation'
 
 class App extends Component {
 
@@ -19,9 +20,14 @@ class App extends Component {
                 <AdminNavigation/>      
             )
         } 
-        else {
+        else if ((localStorage.getItem('isAdmin') === 'false') && localStorage.getItem('loggedIn') === 'true'){
             return (                        
                 <UserNavigation/>
+            )
+        }
+        else {
+            return (                        
+                <LoggedOutNavigation/>
             )
         }
     }
@@ -41,10 +47,10 @@ class App extends Component {
               </Header>
               <Drawer className = "drawer-color" title= "Drawer Title">
                   <Navigation>
-                      <Link to="/Logout">Logout</Link>
                       <Link to="/link2">Link</Link>
                       <Link to="/link3">Link</Link>
                       <Link to="/Profile">Profile</Link>
+                      <Link to="/Logout">Logout</Link>
                   </Navigation>
               </Drawer>
               <Content>

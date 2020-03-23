@@ -6,6 +6,7 @@ export default function UserNavigation() {
     return (
         <Navigation>
             <Link to = "/">Home</Link>
+            <Link to="/login">Login</Link>
             <Link to="/Profile">Profile</Link>
         </Navigation>
     )
