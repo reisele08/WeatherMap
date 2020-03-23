@@ -23,7 +23,12 @@ class Login extends React.Component {
             [event.target.name]: event.target.value
         })
     }
-
+    testConsoleLog(response) {
+        var user = localStorage.getItem("userData")
+        console.log("User data is : " + user)
+        console.log("response from server: ", response, this.state)
+        console.log("decomposing response: ", response.data.name, " ", response.data.role, response.status)
+    }
     handleSubmit = async () => {
         //input validation
         //access to db and check if the inputs are correct or not
@@ -34,6 +39,9 @@ class Login extends React.Component {
         if(response === null){
             alert( 'Incorrect Inputs' )
         }else{
+            localStorage.setItem("userData", JSON.stringify(response.data))
+            this.testConsoleLog(response)
+
             this.props.history.push(
                 '/profile',
                 { detail: response.data.user }
