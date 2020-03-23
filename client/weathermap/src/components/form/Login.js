@@ -12,11 +12,23 @@ class Login extends React.Component {
         super(props)
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            isAdmin: false
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
+    setRole(response){
+        if (response.data.user.role === 'ADMIN'){
+            this.setState({
+                isAdmin: true
+            })
+            localStorage.setItem("isAdmin", "true")
+        }
+        else if(response.data.user.role === 'USER'){
+            localStorage.setItem("isAdmin", "false")
+        }
+}
 
     handleChange(event) {
         this.setState({
@@ -25,9 +37,14 @@ class Login extends React.Component {
     }
     testConsoleLog(response) {
         var user = localStorage.getItem("userData")
+        var admin = localStorage.getItem("isAdmin")
+
         console.log("User data is : " + user)
         console.log("response from server: ", response, this.state)
         console.log("decomposing response: ", response.data.name, " ", response.data.role, response.status)
+        console.log("ROLE: " + response.data.user.role)
+        console.log("admin??: " + admin)
+
     }
     handleSubmit = async () => {
         //input validation
@@ -40,6 +57,10 @@ class Login extends React.Component {
             alert( 'Incorrect Inputs' )
         }else{
             localStorage.setItem("userData", JSON.stringify(response.data))
+            //localStorage.setItem("isAdmin", "false")
+
+            this.setRole(response)
+
             this.testConsoleLog(response)
 
             this.props.history.push(

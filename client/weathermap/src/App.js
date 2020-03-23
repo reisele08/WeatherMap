@@ -13,7 +13,7 @@ class App extends Component {
 
     loginNavigation() {
 
-        if (localStorage.getItem('userData') === 'ADMIN') {
+        if (localStorage.getItem('isAdmin') === 'true') {
             return (                  
                 <AdminNavigation/>      
             )
