@@ -3,6 +3,7 @@ import './App.css';
 import UserList from './components/UserList'
 import Login from './components/form/Login'
 import Profile from './components/Profile'
+import Logout from './components/Logout'
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import RouterTable from './components/RouterTable';
 import {Link} from 'react-router-dom';
@@ -13,7 +14,7 @@ class App extends Component {
 
     loginNavigation() {
 
-        if (localStorage.getItem('isAdmin') === 'true') {
+        if ((localStorage.getItem('isAdmin') === 'true') && localStorage.getItem('loggedIn') === 'true') {
             return (                  
                 <AdminNavigation/>      
             )
@@ -40,7 +41,7 @@ class App extends Component {
               </Header>
               <Drawer className = "drawer-color" title= "Drawer Title">
                   <Navigation>
-                      <Link to="/link1">Link</Link>
+                      <Link to="/Logout">Logout</Link>
                       <Link to="/link2">Link</Link>
                       <Link to="/link3">Link</Link>
                       <Link to="/Profile">Profile</Link>

@@ -13,7 +13,7 @@ class Login extends React.Component {
         this.state = {
             username: '',
             password: '',
-            isAdmin: false
+            isAdmin: false      // Not used, may use in the future if localStorage causes issues
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -59,9 +59,9 @@ class Login extends React.Component {
             alert( 'Incorrect Inputs' )
         }else{
             localStorage.setItem("userData", JSON.stringify(response.data))
-            //localStorage.setItem("isAdmin", "false")
+            localStorage.setItem("loggedIn", "true")
             this.setRole(response)
-            this.testConsoleLog(response)
+            //this.testConsoleLog(response)
             this.props.history.push(
                 '/profile',
                 { detail: response.data.user }
