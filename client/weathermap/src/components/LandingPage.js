@@ -29,11 +29,10 @@ const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
   ))
   return <Fragment>{items}</Fragment>
 }
+
 var markerList = [];
 
-// React Component
 class Landing extends Component<{}, State> {
-  // TODO: Retrieve PredictHQ API data
 
   updateMarkers(data) {
     //var markerList = [];
@@ -128,13 +127,13 @@ class Landing extends Component<{}, State> {
   }
 
   componentDidMount() {
+
     this.getDataAPI();
     this.getGdacsEQ();
     this.getGdacsTC();
     this.getGdacsFL();
     this.getGdacsVL();
     this.getGdacsDR();
-
   }
 
   state = {
