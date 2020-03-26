@@ -24,7 +24,37 @@ class RequestData extends Component {
         console.log(response);
         return response;
     }
+
+    async getGdacsTropicalCyclones(){
+      
+        var response = await axios.get("https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=TC");
+        console.log(response);
+        return response;
+    }
+
+    async getGdacsFloods(){
+      
+        var response = await axios.get("https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=FL");
+        console.log(response);
+        return response;
+    }
+
+    async getGdacsVolcanoes(){
+      
+        var response = await axios.get("https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=VL");
+        console.log(response);
+        return response;
+    }
+
+    async getGdacsDroughts(){
+      
+        var response = await axios.get("https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=DR");
+        console.log(response);
+        return response;
+    }
 }
 
 
-export default new RequestData();
+
+
+export default new RequestData;

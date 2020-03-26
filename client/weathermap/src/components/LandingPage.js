@@ -87,8 +87,40 @@ class Landing extends Component<{}, State> {
     }
   }
 
-  async getGdacsAPI(){
+  async getGdacsEQ(){
     var response = await requestData.getGdacsEarthquakes();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
+  async getGdacsTC(){
+    var response = await requestData.getGdacsTropicalCyclones();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
+  async getGdacsFL(){
+    var response = await requestData.getGdacsFloods();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
+  async getGdacsVL(){
+    var response = await requestData.getGdacsVolcanoes();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
+  async getGdacsDR(){
+    var response = await requestData.getGdacsDroughts();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
       console.log(response.data);
@@ -97,8 +129,12 @@ class Landing extends Component<{}, State> {
 
   componentDidMount() {
     this.getDataAPI();
-    this.getGdacsAPI();
-    
+    this.getGdacsEQ();
+    this.getGdacsTC();
+    this.getGdacsFL();
+    this.getGdacsVL();
+    this.getGdacsDR();
+
   }
 
   state = {
