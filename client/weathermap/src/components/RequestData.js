@@ -18,7 +18,7 @@ class RequestData extends Component {
         }
     }
 
-    async getGdacs(){
+    async getGdacsEarthquakes(){
       
         var response = await axios.get("https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=EQ");
         console.log(response);

@@ -29,13 +29,14 @@ const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
   ))
   return <Fragment>{items}</Fragment>
 }
+var markerList = [];
 
 // React Component
 class Landing extends Component<{}, State> {
   // TODO: Retrieve PredictHQ API data
 
   updateMarkers(data) {
-    let markerList = [];
+    //var markerList = [];
     let results = data.results;
     let counter = 0;
 
@@ -57,12 +58,12 @@ class Landing extends Component<{}, State> {
   }
 
   populateGdacsMarkers(data){
-      var markerList = [];
+      //var markerList = [];
       var features = data.features;
       let counter = 0;
 
       features.forEach(function(result) {
-        var title = "GDACS" + result.properties.name;
+        var title = "GDACS " + result.properties.name;
         var latitude = result.bbox[0];
         var longitude = result.bbox[1];
         var location = [longitude, latitude];
@@ -70,7 +71,7 @@ class Landing extends Component<{}, State> {
         markerList.push({key: uniqueKey, position: location, content: title});
 
       });
-
+      
       this.setState({
         lat: markerList[0]["position"][0],
         lng: markerList[0]["position"][1],
@@ -87,7 +88,7 @@ class Landing extends Component<{}, State> {
   }
 
   async getGdacsAPI(){
-    var response = await requestData.getGdacs();
+    var response = await requestData.getGdacsEarthquakes();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
       console.log(response.data);
@@ -97,6 +98,7 @@ class Landing extends Component<{}, State> {
   componentDidMount() {
     this.getDataAPI();
     this.getGdacsAPI();
+    
   }
 
   state = {
