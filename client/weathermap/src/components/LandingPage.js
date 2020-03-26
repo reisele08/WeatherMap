@@ -19,7 +19,7 @@ type State = {
 }
 
 const MyPopupMarker = ({ content, position }: Props) => (
-  <Marker position={position} icon={myIcon}>
+  <Marker position={position}>
     <Popup>{content}</Popup>
   </Marker>
 )
@@ -31,16 +31,16 @@ const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
   return <Fragment>{items}</Fragment>
 }
 
-export const myIcon = new L.Icon({
-  iconUrl: 'https://www.gdacs.org/images/gdacs_icons/maps/Green/EQ.png',
-  iconRetinaUrl: 'https://www.gdacs.org/images/gdacs_icons/maps/Green/EQ.png',
-  iconAnchor: [20, 40],
-  popupAnchor: [0, -35],
-  iconSize: [40, 40],
-  //shadowUrl: '../assets/marker-shadow.png',
-  shadowSize: [29, 40],
-  shadowAnchor: [7, 40],
-})
+// export const myIcon = new L.Icon({
+//   iconUrl: 'https://www.gdacs.org/images/gdacs_icons/maps/Green/EQ.png',
+//   iconRetinaUrl: 'https://www.gdacs.org/images/gdacs_icons/maps/Green/EQ.png',
+//   iconAnchor: [20, 40],
+//   popupAnchor: [0, -35],
+//   iconSize: [40, 40],
+//   //shadowUrl: '../assets/marker-shadow.png',
+//   shadowSize: [29, 40],
+//   shadowAnchor: [7, 40],
+// })
 
 var markerList = [];
 
@@ -72,17 +72,6 @@ class Landing extends Component<{}, State> {
       //var markerList = [];
       var features = data.features;
       let counter = 0;
-
-      // var suitcasePoint = new L.Icon({
-      //   iconUrl: 'https://www.gdacs.org/images/gdacs_icons/maps/Green/EQ.png',
-      //   iconRetinaUrl: 'https://www.gdacs.org/images/gdacs_icons/maps/Green/EQ.png',
-      //   iconAnchor: [20, 40],
-      //   popupAnchor: [0, -35],
-      //   iconSize: [40, 40],
-      //   //shadowUrl: '../assets/marker-shadow.png',
-      //   shadowSize: [29, 40],
-      //   shadowAnchor: [7, 40],
-      // })
 
       features.forEach(function(result) {
         var title = "GDACS " + result.properties.name;
