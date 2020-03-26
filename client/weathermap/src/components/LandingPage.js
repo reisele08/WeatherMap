@@ -56,8 +56,27 @@ class Landing extends Component<{}, State> {
     );
   }
 
-  populateGdacsMarkers(){
+  populateGdacsMarkers(data){
+      var markerList = [];
+      var features = data.features;
+      let counter = 0;
 
+      features.forEach(function(result) {
+        var title = "GDACS" + result.properties.name;
+        var latitude = result.bbox[0];
+        var longitude = result.bbox[1];
+        var location = [longitude, latitude];
+        let uniqueKey = "Marker" + counter++;
+        markerList.push({key: uniqueKey, position: location, content: title});
+
+      });
+
+      this.setState({
+        lat: markerList[0]["position"][0],
+        lng: markerList[0]["position"][1],
+        zoom: 4,
+        markers: markerList}
+      );
   }
 
   async getDataAPI() {
@@ -70,7 +89,7 @@ class Landing extends Component<{}, State> {
   async getGdacsAPI(){
     var response = await requestData.getGdacs();
     if (response !== null){
-      //this.updateMarkers(response.data);
+      this.populateGdacsMarkers(response.data);
       console.log(response.data);
     }
   }
