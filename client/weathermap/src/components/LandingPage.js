@@ -56,6 +56,10 @@ class Landing extends Component<{}, State> {
     );
   }
 
+  populateGdacsMarkers(){
+
+  }
+
   async getDataAPI() {
     var response = await requestData.getData();
     if (response !== null) {
@@ -63,8 +67,17 @@ class Landing extends Component<{}, State> {
     }
   }
 
+  async getGdacsAPI(){
+    var response = await requestData.getGdacs();
+    if (response !== null){
+      //this.updateMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
   componentDidMount() {
     this.getDataAPI();
+    this.getGdacsAPI();
   }
 
   state = {

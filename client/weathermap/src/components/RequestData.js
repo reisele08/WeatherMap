@@ -17,6 +17,13 @@ class RequestData extends Component {
             return null;
         }
     }
+
+    async getGdacs(){
+      
+        var response = await axios.get("https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=EQ");
+        console.log(response);
+        return response;
+    }
 }
 
 
