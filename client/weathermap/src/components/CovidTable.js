@@ -13,8 +13,8 @@ class UserList extends Component{
   }
 
   componentDidMount() {
-    //this.getUserList();
-    //this.timer = setInterval(() => this.getUserList(), 10000);
+    this.getCovid19DataByCountry();
+    this.timer = setInterval(() => this.getCovid19DataByCountry(), 10000);
     this.setState({
         columns: [
             {title: 'Country', field: 'country', editable: 'never'},
@@ -36,43 +36,45 @@ class UserList extends Component{
     })
 }
 
-// async getUserList() {
-//   var passback = await requestData.getCovid19DataByCountry();
-//   if (passback !== null) {
-//       this.populateData(passback.data)
-//   }
-// }
+async getCovid19DataByCountry() {
+  var response = await requestData.getCovid19DataByCountry();
+  if (response !== null) {
+      this.populateData(response.data)
+  }
+}
 
     componentWillUnmount() {
         clearInterval(this.timer);
         this.timer = null;
     }
-/*
+
     populateData(data) {
         console.log(data)
         var covidCases = []
-        response.forEach(data.features => {
-            var name = (user.name)
-            var username = user.username
-            var email = user.email
-            var role = user.role
-            var id = user._id
+        var features = data.features;
 
-            var user_obj = {
-                id: id,
-                name: name,
-                username: username,
-                email: email,
-                role: role,
+        features.forEach(function(result){
+            var country = result.properties.Country_Region
+            var update = result.properties.Last_Update
+            var confirmed = result.properties.Confirmed
+            var deaths = result.properties.Deaths
+            var recovered = result.properties.Recovered
+
+            var country_obj = {
+                country: country,
+                update: update,
+                confirmed: confirmed,
+                deaths: deaths,
+                recovered: recovered,
             }
 
-            userList.push(user_obj)
+            covidCases.push(country_obj)
         });
 
-        this.setState({data: userList})
+        this.setState({data: covidCases})
 
     }
-*/
+
  render(){
     return (
       <MaterialTable
