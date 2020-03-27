@@ -91,6 +91,28 @@ class Landing extends Component<{}, State> {
       );
   }
 
+  populateCovid19Data(data){
+      var features = data.features;
+      let counter = 0;
+
+      features.forEach(function(result) {
+        var title = "COVID " + result.properties.Country_Region + " \n" + " Infected: " + result.properties.Confirmed;
+        var latitude = result.geometry.coordinates[0];
+        var longitude = result.geometry.coordinates[1];
+        var location = [longitude, latitude];
+        let uniqueKey = "Marker" + counter++;
+
+        markerList.push({key: uniqueKey, position: location, content: title});
+      });
+
+      this.setState({
+        lat: markerList[0]["position"][0],
+        lng: markerList[0]["position"][1],
+        zoom: 4,
+        markers: markerList}
+      );
+  }
+
   async getDataAPI() {
     var response = await requestData.getData();
     if (response !== null) {
@@ -141,7 +163,7 @@ class Landing extends Component<{}, State> {
   async getCovid19DataByCountry(){
     var response = await requestData.getCovid19DataByCountry();
     if (response !== null){
-      //this.populateGdacsMarkers(response.data);
+      this.populateCovid19Data(response.data);
       console.log(response.data);
     }
   }
