@@ -12,18 +12,42 @@ class Login extends React.Component {
         super(props)
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            isAdmin: false      // Not used, may use in the future if localStorage causes issues
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
+    setRole(response){
+        if (response.data.user.role === 'ADMIN'){
+            this.setState({
+                isAdmin: true
+            })
+            localStorage.setItem("isAdmin", "true")
+        }
+        else if(response.data.user.role === 'USER'){
+            this.setState({
+                isAdmin: false
+            })
+            localStorage.setItem("isAdmin", "false")
+        }
+}
 
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         })
     }
+    testConsoleLog(response) {
+        var user = localStorage.getItem("userData")
+        var admin = localStorage.getItem("isAdmin")
 
+        console.log("User data is : " + user)
+        console.log("response from server: ", response, this.state)
+        console.log("ROLE: " + response.data.user.role)
+        console.log("admin??: " + admin)
+
+    }
     handleSubmit = async () => {
         //input validation
         //access to db and check if the inputs are correct or not
@@ -34,10 +58,16 @@ class Login extends React.Component {
         if(response === null){
             alert( 'Incorrect Inputs' )
         }else{
+            localStorage.setItem("userData", JSON.stringify(response.data))
+            localStorage.setItem("loggedIn", "true")
+            this.setRole(response)
+            //this.testConsoleLog(response)
             this.props.history.push(
                 '/profile',
                 { detail: response.data.user }
             )
+            window.location.reload()
+
         }
 
 
