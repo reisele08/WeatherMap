@@ -54,7 +54,4 @@ class RequestData extends Component {
     }
 }
 
-
-
-
 export default new RequestData;
