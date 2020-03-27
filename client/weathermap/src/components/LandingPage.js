@@ -3,6 +3,7 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from 'axios';
 import requestData from './RequestData';
 import L from 'leaflet'
+import CovidTable from './CovidTable'
 
 // Types
 type Position = [number, number]
@@ -96,7 +97,10 @@ class Landing extends Component<{}, State> {
       let counter = 0;
 
       features.forEach(function(result) {
-        var title = "COVID-19 Outbreak: " + result.properties.Country_Region + " \n" + " Infected: " + result.properties.Confirmed;
+        var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n" 
+        + " Infected: " + result.properties.Confirmed
+        + " Deaths: " + result.properties.Deaths 
+        + " Recovered: " + result.properties.Recovered;
         var latitude = result.geometry.coordinates[0];
         var longitude = result.geometry.coordinates[1];
         var location = [longitude, latitude];

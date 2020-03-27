@@ -3,7 +3,7 @@ import MaterialTable from 'material-table';
 import requestData from './RequestData';
 
 
-class UserList extends Component{
+class CovidTable extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -78,59 +78,11 @@ async getCovid19DataByCountry() {
  render(){
     return (
       <MaterialTable
-        title="Covid 19 cases"
+        title="Covid 19 Cases by Country"
         columns={this.state.columns}
         data={this.state.data}
-        // editable={{
-        //  isEditable: rowData => rowData.role === "USER", // only name(a) rows would be editable
-        //  isDeletable: rowData => rowData.role === "USER", // only name(a) rows would be deletable
-
-        //      /*
-        //      onRowAdd: newData =>
-        //        new Promise(resolve => {
-        //          setTimeout(() => {
-        //            resolve();
-        //            setState(prevState => {
-        //              const data = [...prevState.data];
-        //              data.push(newData);
-        //              return { ...prevState, data };
-        //            });
-        //          }, 600);
-        //        }),
-
-        //       */
-        //   onRowUpdate: (newData, oldData) =>
-        //     new Promise(resolve => {
-        //       setTimeout(() => {
-        //         resolve();
-        //         var didUpdate = this.updateUser(newData);
-        //         if (didUpdate) {
-        //           this.setState(prevState => {
-        //             const data = [...prevState.data];
-        //             data[data.indexOf(oldData)] = newData;
-        //             return { ...prevState, data };
-        //           });
-        //         }
-        //       }, 600);
-        //     }),
-
-        //   onRowDelete: oldData =>
-        //     new Promise(resolve => {
-        //       setTimeout(() => {
-        //         resolve();
-        //         var didDelete = this.deleteUser(oldData);
-        //         if(didDelete){
-        //             this.setState(prevState => {
-        //                 const data = [...prevState.data];
-        //                 data.splice(data.indexOf(oldData), 1);
-        //                 return { ...prevState, data };
-        //             });
-        //         }
-        //       }, 700);
-        //     })
-        // }}
       />
     );
   }
 }
-  export default UserList;
+  export default CovidTable;
