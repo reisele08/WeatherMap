@@ -96,7 +96,7 @@ class Landing extends Component<{}, State> {
       let counter = 0;
 
       features.forEach(function(result) {
-        var title = "COVID " + result.properties.Country_Region + " \n" + " Infected: " + result.properties.Confirmed;
+        var title = "COVID-19 Outbreak: " + result.properties.Country_Region + " \n" + " Infected: " + result.properties.Confirmed;
         var latitude = result.geometry.coordinates[0];
         var longitude = result.geometry.coordinates[1];
         var location = [longitude, latitude];
