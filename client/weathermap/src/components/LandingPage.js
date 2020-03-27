@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from 'axios';
 import requestData from './RequestData';
+import L from 'leaflet'
 
 // Types
 type Position = [number, number]
@@ -30,17 +31,28 @@ const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
   return <Fragment>{items}</Fragment>
 }
 
-// React Component
+// export const myIcon = new L.Icon({
+//   iconUrl: 'https://www.gdacs.org/images/gdacs_icons/maps/Green/EQ.png',
+//   iconRetinaUrl: 'https://www.gdacs.org/images/gdacs_icons/maps/Green/EQ.png',
+//   iconAnchor: [20, 40],
+//   popupAnchor: [0, -35],
+//   iconSize: [40, 40],
+//   //shadowUrl: '../assets/marker-shadow.png',
+//   shadowSize: [29, 40],
+//   shadowAnchor: [7, 40],
+// })
+
+var markerList = [];
+
 class Landing extends Component<{}, State> {
-  // TODO: Retrieve PredictHQ API data
 
   updateMarkers(data) {
-    let markerList = [];
+    //var markerList = [];
     let results = data.results;
     let counter = 0;
 
     results.forEach(function(result) {
-      let title = result.title;
+      let title = "PredictHQ " + result.title;
       let latitude = result.location[0];
       let longitude = result.location[1];
       let location = [longitude, latitude];
@@ -56,6 +68,29 @@ class Landing extends Component<{}, State> {
     );
   }
 
+  populateGdacsMarkers(data){
+      //var markerList = [];
+      var features = data.features;
+      let counter = 0;
+
+      features.forEach(function(result) {
+        var title = "GDACS " + result.properties.name;
+        var latitude = result.bbox[0];
+        var longitude = result.bbox[1];
+        var location = [longitude, latitude];
+        let uniqueKey = "Marker" + counter++;
+        markerList.push({key: uniqueKey, position: location, content: title});
+
+      });
+      
+      this.setState({
+        lat: markerList[0]["position"][0],
+        lng: markerList[0]["position"][1],
+        zoom: 4,
+        markers: markerList}
+      );
+  }
+
   async getDataAPI() {
     var response = await requestData.getData();
     if (response !== null) {
@@ -63,8 +98,54 @@ class Landing extends Component<{}, State> {
     }
   }
 
+  async getGdacsEQ(){
+    var response = await requestData.getGdacsEarthquakes();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
+  async getGdacsTC(){
+    var response = await requestData.getGdacsTropicalCyclones();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
+  async getGdacsFL(){
+    var response = await requestData.getGdacsFloods();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
+  async getGdacsVL(){
+    var response = await requestData.getGdacsVolcanoes();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
+  async getGdacsDR(){
+    var response = await requestData.getGdacsDroughts();
+    if (response !== null){
+      this.populateGdacsMarkers(response.data);
+      console.log(response.data);
+    }
+  }
+
   componentDidMount() {
+
     this.getDataAPI();
+    this.getGdacsEQ();
+    this.getGdacsTC();
+    this.getGdacsFL();
+    this.getGdacsVL();
+    this.getGdacsDR();
   }
 
   state = {
