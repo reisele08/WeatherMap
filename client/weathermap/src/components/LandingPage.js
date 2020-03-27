@@ -102,7 +102,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsEarthquakes();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     }
   }
 
@@ -110,7 +110,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsTropicalCyclones();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     }
   }
 
@@ -118,7 +118,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsFloods();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     }
   }
 
@@ -126,7 +126,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsVolcanoes();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     }
   }
 
@@ -134,18 +134,26 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsDroughts();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
+      //console.log(response.data);
+    }
+  }
+
+  async getCovid19DataByCountry(){
+    var response = await requestData.getCovid19DataByCountry();
+    if (response !== null){
+      //this.populateGdacsMarkers(response.data);
       console.log(response.data);
     }
   }
 
   componentDidMount() {
-
     this.getDataAPI();
     this.getGdacsEQ();
     this.getGdacsTC();
     this.getGdacsFL();
     this.getGdacsVL();
     this.getGdacsDR();
+    this.getCovid19DataByCountry();
   }
 
   state = {

@@ -52,6 +52,12 @@ class RequestData extends Component {
         console.log(response);
         return response;
     }
-}
 
+    async getCovid19DataByCountry(){
+
+        var response = await axios.get("https://opendata.arcgis.com/datasets/bbb2e4f589ba40d692fab712ae37b9ac_2.geojson");
+        console.log(response);
+        return response;
+    }
+}
 export default new RequestData;

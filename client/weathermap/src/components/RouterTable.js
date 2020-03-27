@@ -7,7 +7,6 @@ import Logout from './Logout';
 import SignUp from './form/SignUp';
 import Profile from "./Profile";
 
-
 class RouterTable extends Component {
   render() {
     const jsx = <Switch>

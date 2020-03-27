@@ -8,6 +8,7 @@ export default function AdminNavigation() {
             <Link to = "/">Home</Link>
             <Link to="/UserList">Admin Page</Link>
             <Link to="/Profile">Profile</Link>
+
         </Navigation>
     )
 }
