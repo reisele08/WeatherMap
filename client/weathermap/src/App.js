@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import AdminNavigation from './components/AdminNavigation'
 import UserNavigation from './components/UserNavigation'
 import LoggedOutNavigation from './components/LoggedOutNavigation'
-import Graph from './components/covid-graphs/CanadaConfirmed'
+
 class App extends Component {
     
     loginNavigation() {

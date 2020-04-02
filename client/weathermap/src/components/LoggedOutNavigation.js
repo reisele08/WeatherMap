@@ -2,7 +2,7 @@ import React from 'react';
 import {Navigation} from 'react-mdl';
 import {Link} from 'react-router-dom';
 
-import Graph from "./covid-graphs/CanadaConfirmed";
+
 
 export default function UserNavigation() {
     return (

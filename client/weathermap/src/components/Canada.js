@@ -1,14 +1,15 @@
 
 import React, {Component} from 'react';
 import Chart from 'react-apexcharts';
-import Landing from "./LandingPage";
-import requestServer from "./RequestServer";
+
+import requestData from "./RequestData";
+
 class ApexChart extends Component {
     constructor(props) {
         super(props);
         this.receivedData = false;
 
-        var response = requestServer.getCanadaConfirmed();
+
         this.state = {
 
                 received:false,
@@ -55,8 +56,8 @@ class ApexChart extends Component {
 
     }
 
-    getData() {
-        var response = requestServer.getCanadaConfirmed();
+    async getData() {
+        var response = await requestData.getCovid19CanadaConfirmed();
         console.log(response.data);
         this.updateGraphData(response.data)
 
