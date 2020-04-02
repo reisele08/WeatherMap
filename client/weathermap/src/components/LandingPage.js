@@ -97,24 +97,35 @@ class Landing extends Component<{}, State> {
       let counter = 0;
 
       features.forEach(function(result) {
+        if(!result.geometry){
+          console.log(result.geometry)
+        }
+        else{
         var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n" 
         + " Infected: " + result.properties.Confirmed
         + " Deaths: " + result.properties.Deaths 
         + " Recovered: " + result.properties.Recovered;
+
         var latitude = result.geometry.coordinates[0];
         var longitude = result.geometry.coordinates[1];
+        
+        //var latitude = result.properties.Long_;
+        //var longitude = result.properties.Lat;
         var location = [longitude, latitude];
+        
         let uniqueKey = "Marker" + counter++;
 
         markerList.push({key: uniqueKey, position: location, content: title});
+        }
       });
-
+    
       this.setState({
         lat: markerList[0]["position"][0],
         lng: markerList[0]["position"][1],
         zoom: 4,
         markers: markerList}
       );
+      
   }
 
   async getDataAPI() {
