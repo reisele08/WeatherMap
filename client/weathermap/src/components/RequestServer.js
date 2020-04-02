@@ -81,6 +81,18 @@ class RequestServer extends Component {
     }
 
 
+    async getCanadaConfirmed(){
+        try {
+            var response = await axios.get(this.getServerLocation() + '/corona/canada/country/confirmed')
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+
+    }
+
+
 
 }
 

@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import AdminNavigation from './components/AdminNavigation'
 import UserNavigation from './components/UserNavigation'
 import LoggedOutNavigation from './components/LoggedOutNavigation'
-
+import Graph from './components/covid-graphs/CanadaConfirmed'
 class App extends Component {
     
     loginNavigation() {
@@ -30,6 +30,8 @@ class App extends Component {
     return (
       <div>
           <Layout>
+
+
               <Header className = "header-color" title = "Weather Map">
               {this.loginNavigation()}
 
@@ -40,9 +42,11 @@ class App extends Component {
                       <Link to="/Profile">Profile</Link>
                   </Navigation> */}
               </Header>
+
+
               <Drawer className = "drawer-color" title= "Options">
                   <Navigation>
-                      <Link to="/link2">Empty Link</Link>
+                      <Link to="/CovidStats">covidStats</Link>
                       <Link to="/link3">Empty Link</Link>
                       <Link to="/Profile">Profile</Link>
                       <Link to="/Logout">Logout</Link>
