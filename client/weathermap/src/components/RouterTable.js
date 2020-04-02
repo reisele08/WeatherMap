@@ -6,7 +6,7 @@ import Login from './form/Login';
 import Logout from './Logout';
 import SignUp from './form/SignUp';
 import Profile from "./Profile";
-
+import CovidTable from "./CovidTable";
 
 class RouterTable extends Component {
   render() {
@@ -17,6 +17,7 @@ class RouterTable extends Component {
         <Route path = "/UserList" component = {UserList} />
         <Route path = "/SignUp" component = {SignUp} />
         <Route path = "/Profile" component = {Profile} />
+        <Route path = "/CovidTable" component = {CovidTable} />
 
         </Switch>
 
