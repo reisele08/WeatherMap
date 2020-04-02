@@ -2,14 +2,28 @@ import React, {Component, Fragment} from 'react';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from 'axios';
 import requestData from './RequestData';
-import L from 'leaflet'
+import L from 'leaflet';
+import { yellowIcon, blueIcon, blackIcon, greenIcon, redIcon, greyIcon} from './icon';
+import {blue} from "@material-ui/core/colors";
+
 
 // Types
 type Position = [number, number]
 
+
+var iconObject = {
+  DE:yellowIcon,
+  EQ:blackIcon,
+  TC:greenIcon,
+  FL:blueIcon,
+  VL:redIcon,
+  DR:greyIcon
+};
+
 type Props = {|
-  content: string,
-  position: Position,
+    content: string,
+    position: Position,
+    icon: string,
 |}
 
 type MarkerData = {| ...Props, key: string |}
@@ -18,8 +32,11 @@ type State = {
   markers: Array<MarkerData>,
 }
 
-const MyPopupMarker = ({ content, position }: Props) => (
-  <Marker position={position}>
+const MyPopupMarker = ({ content, position, icon }: Props) => (
+  <Marker
+    position={position}
+    icon = {iconObject[icon]}
+  >
     <Popup>{content}</Popup>
   </Marker>
 )
@@ -57,7 +74,7 @@ class Landing extends Component<{}, State> {
       let longitude = result.location[1];
       let location = [longitude, latitude];
       let uniqueKey = "Marker" + counter++;
-      markerList.push({key: uniqueKey, position: location, content: title});
+      markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
     });
 
     this.setState({
@@ -78,8 +95,9 @@ class Landing extends Component<{}, State> {
         var latitude = result.bbox[0];
         var longitude = result.bbox[1];
         var location = [longitude, latitude];
+        var iconType = result.properties.eventtype;
         let uniqueKey = "Marker" + counter++;
-        markerList.push({key: uniqueKey, position: location, content: title});
+        markerList.push({key: uniqueKey, position: location, content: title, icon:iconType});
 
       });
       
@@ -102,6 +120,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsEarthquakes();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
+      console.log('EQ DATA')
       console.log(response.data);
     }
   }
@@ -110,6 +129,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsTropicalCyclones();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
+      console.log('TC DATA')
       console.log(response.data);
     }
   }
@@ -118,6 +138,8 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsFloods();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
+      console.log('FL DATA')
+
       console.log(response.data);
     }
   }
