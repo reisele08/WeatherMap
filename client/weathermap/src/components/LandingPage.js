@@ -4,7 +4,6 @@ import axios from 'axios';
 import requestData from './RequestData';
 import L from 'leaflet';
 import { yellowIcon, blueIcon, blackIcon, greenIcon, redIcon, greyIcon} from './icon';
-import {blue} from "@material-ui/core/colors";
 import CovidTable from './CovidTable'
 
 // Types
@@ -118,21 +117,21 @@ class Landing extends Component<{}, State> {
           console.log(result.geometry)
         }
         else{
-        var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n"
-        + " Infected: " + result.properties.Confirmed
-        + " Deaths: " + result.properties.Deaths
-        + " Recovered: " + result.properties.Recovered;
+          var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n"
+          + " Infected: " + result.properties.Confirmed
+          + " Deaths: " + result.properties.Deaths
+          + " Recovered: " + result.properties.Recovered;
 
-        var latitude = result.geometry.coordinates[0];
-        var longitude = result.geometry.coordinates[1];
+          var latitude = result.geometry.coordinates[0];
+          var longitude = result.geometry.coordinates[1];
 
-        //var latitude = result.properties.Long_;
-        //var longitude = result.properties.Lat;
-        var location = [longitude, latitude];
+          //var latitude = result.properties.Long_;
+          //var longitude = result.properties.Lat;
+          var location = [longitude, latitude];
 
-        let uniqueKey = "Marker" + counter++;
+          let uniqueKey = "Marker" + counter++;
 
-        markerList.push({key: uniqueKey, position: location, content: title});
+          markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
         }
       });
 
