@@ -61,29 +61,7 @@ class RequestData extends Component {
     }
 
 
-    async getCovid19CanadaConfirmed(){
 
-        var response = await axios.get("https://api.covid19api.com/total/dayone/country/canada/status/confirmed")
-            .then(response => response.json())
-            .then(data => {
-                var dates = data.map(function(fields){
-                    return fields.Date;
-                });
-                var values = data.map(function(fields){
-                    return fields.Cases;
-                });
-                var pair = {
-                    dates,
-                    values
-                }
-                return pair;
-            })
-            .catch(err => {
-                console.log("could not get data")
-            })
-        console.log(response);
-        return response;
-    }
 
 
 
