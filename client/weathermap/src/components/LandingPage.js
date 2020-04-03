@@ -2,15 +2,27 @@ import React, {Component, Fragment} from 'react';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from 'axios';
 import requestData from './RequestData';
-import L from 'leaflet'
+import L from 'leaflet';
+import { yellowIcon, blueIcon, blackIcon, greenIcon, redIcon, greyIcon} from './icon';
 import CovidTable from './CovidTable'
 
 // Types
 type Position = [number, number]
 
+
+var iconObject = {
+  DE:yellowIcon,
+  EQ:blackIcon,
+  TC:greenIcon,
+  FL:blueIcon,
+  VL:redIcon,
+  DR:greyIcon
+};
+
 type Props = {|
-  content: string,
-  position: Position,
+    content: string,
+    position: Position,
+    icon: string,
 |}
 
 type MarkerData = {| ...Props, key: string |}
@@ -19,8 +31,11 @@ type State = {
   markers: Array<MarkerData>,
 }
 
-const MyPopupMarker = ({ content, position }: Props) => (
-  <Marker position={position}>
+const MyPopupMarker = ({ content, position, icon }: Props) => (
+  <Marker
+    position={position}
+    icon = {iconObject[icon]}
+  >
     <Popup>{content}</Popup>
   </Marker>
 )
@@ -58,7 +73,7 @@ class Landing extends Component<{}, State> {
       let longitude = result.location[1];
       let location = [longitude, latitude];
       let uniqueKey = "Marker" + counter++;
-      markerList.push({key: uniqueKey, position: location, content: title});
+      markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
     });
 
     this.setState({
@@ -79,11 +94,12 @@ class Landing extends Component<{}, State> {
         var latitude = result.bbox[0];
         var longitude = result.bbox[1];
         var location = [longitude, latitude];
+        var iconType = result.properties.eventtype;
         let uniqueKey = "Marker" + counter++;
-        markerList.push({key: uniqueKey, position: location, content: title});
+        markerList.push({key: uniqueKey, position: location, content: title, icon:iconType});
 
       });
-      
+
       this.setState({
         lat: markerList[0]["position"][0],
         lng: markerList[0]["position"][1],
@@ -97,20 +113,27 @@ class Landing extends Component<{}, State> {
       let counter = 0;
 
       features.forEach(function(result) {
-        if(result.properties != null) {
-          var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n"
-              + " Infected: " + result.properties.Confirmed
-              + " Deaths: " + result.properties.Deaths
-              + " Recovered: " + result.properties.Recovered;
-          if(result.geometry != null ) {
-            var latitude = result.geometry.coordinates[0];
-            var longitude = result.geometry.coordinates[1];
-            var location = [longitude, latitude];
-            let uniqueKey = "Marker" + counter++;
-            markerList.push({key: uniqueKey, position: location, content: title});
-          }
-        }
 
+        if(!result.geometry){
+          console.log(result.geometry)
+        }
+        else{
+          var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n"
+          + " Infected: " + result.properties.Confirmed
+          + " Deaths: " + result.properties.Deaths
+          + " Recovered: " + result.properties.Recovered;
+
+          var latitude = result.geometry.coordinates[0];
+          var longitude = result.geometry.coordinates[1];
+
+          //var latitude = result.properties.Long_;
+          //var longitude = result.properties.Lat;
+          var location = [longitude, latitude];
+
+          let uniqueKey = "Marker" + counter++;
+
+          markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
+        }
 
       });
 
@@ -120,6 +143,7 @@ class Landing extends Component<{}, State> {
         zoom: 4,
         markers: markerList}
       );
+
   }
 
   async getDataAPI() {
