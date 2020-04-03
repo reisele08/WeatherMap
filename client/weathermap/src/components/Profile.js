@@ -1,19 +1,24 @@
 import React from 'react';
-
+import UpdateProfile from "./form/UpdateProfile";
+import {Update} from "@material-ui/icons";
 
 
 class Profile extends React.Component {
     constructor(props) {
+        var data = JSON.parse(localStorage.getItem("userData"));
+
         super(props)
         console.log(props)
         this.state = {
-            name:''
+            name:'',
+            email: '',
+            username: ''
         };
-        if(props.location.state !== undefined){
+        if(data !== '{}'){
             this.state = {
-                name: props.location.state.detail.name,
-                email: props.location.state.detail.email,
-                username:props.location.state.detail.username
+                name: data.user.name,
+                email: data.user.email,
+                username:data.user.username,
             };
         }
         console.log(props)
@@ -24,8 +29,10 @@ class Profile extends React.Component {
     render(){
 
         return(
-            <div>
-                <h1>Hello {this.state.name}</h1>
+            <div style={{margin:'auto', padding : '20px', textAlign: 'center'}}>
+                <h2>Hello {this.state.name}</h2>
+                <h3>Username : {this.state.username} </h3>
+                <UpdateProfile/>
             </div>
         )
     }
