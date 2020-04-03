@@ -97,16 +97,21 @@ class Landing extends Component<{}, State> {
       let counter = 0;
 
       features.forEach(function(result) {
-        var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n" 
-        + " Infected: " + result.properties.Confirmed
-        + " Deaths: " + result.properties.Deaths 
-        + " Recovered: " + result.properties.Recovered;
-        var latitude = result.geometry.coordinates[0];
-        var longitude = result.geometry.coordinates[1];
-        var location = [longitude, latitude];
-        let uniqueKey = "Marker" + counter++;
+        if(result.properties != null) {
+          var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n"
+              + " Infected: " + result.properties.Confirmed
+              + " Deaths: " + result.properties.Deaths
+              + " Recovered: " + result.properties.Recovered;
+          if(result.geometry != null ) {
+            var latitude = result.geometry.coordinates[0];
+            var longitude = result.geometry.coordinates[1];
+            var location = [longitude, latitude];
+            let uniqueKey = "Marker" + counter++;
+            markerList.push({key: uniqueKey, position: location, content: title});
+          }
+        }
 
-        markerList.push({key: uniqueKey, position: location, content: title});
+
       });
 
       this.setState({

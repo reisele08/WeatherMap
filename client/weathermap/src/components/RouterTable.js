@@ -7,7 +7,7 @@ import Logout from './Logout';
 import SignUp from './form/SignUp';
 import Profile from "./Profile";
 import CovidTable from "./CovidTable";
-import Canada from "./Canada";
+import Canada from "./CovidGraphs";
 
 
 
