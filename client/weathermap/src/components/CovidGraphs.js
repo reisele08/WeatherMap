@@ -147,7 +147,7 @@ class ApexChart extends Component {
                         <DropdownItem onClick={() => this.setCountry("Spain")}>Spain</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("Austria")}>Austria</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("United-Kingdom")}>UK</DropdownItem>
-                        <DropdownItem>Another Action</DropdownItem>
+                         
 
                         <DropdownItem> </DropdownItem>
                     </DropdownMenu>
