@@ -4,11 +4,10 @@ import axios from 'axios';
 import requestData from './RequestData';
 import L from 'leaflet';
 import { yellowIcon, blueIcon, blackIcon, greenIcon, redIcon, greyIcon} from './icon';
-import CovidTable from './CovidTable'
+import CovidTable from './CovidTable';
 
 // Types
-type Position = [number, number]
-
+type Position = [number, number];
 
 var iconObject = {
   DE:yellowIcon,
@@ -58,21 +57,20 @@ const MyMarkersList = ({ markers }: { markers: Array<MarkerData> }) => {
 //   shadowAnchor: [7, 40],
 // })
 
-var markerList = [];
+let markerList = [];
+let uniqueMarkerCounter = 0;
 
 class Landing extends Component<{}, State> {
 
   updateMarkers(data) {
-    //var markerList = [];
     let results = data.results;
-    let counter = 0;
 
     results.forEach(function(result) {
       let title = "PredictHQ " + result.title;
       let latitude = result.location[0];
       let longitude = result.location[1];
       let location = [longitude, latitude];
-      let uniqueKey = "Marker" + counter++;
+      let uniqueKey = "Marker" + uniqueMarkerCounter++;
       markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
     });
 
@@ -85,65 +83,54 @@ class Landing extends Component<{}, State> {
   }
 
   populateGdacsMarkers(data){
-      //var markerList = [];
-      var features = data.features;
-      let counter = 0;
+    var features = data.features;
 
-      features.forEach(function(result) {
-        var title = "GDACS " + result.properties.name;
-        var latitude = result.bbox[0];
-        var longitude = result.bbox[1];
-        var location = [longitude, latitude];
-        var iconType = result.properties.eventtype;
-        let uniqueKey = "Marker" + counter++;
-        markerList.push({key: uniqueKey, position: location, content: title, icon:iconType});
+    features.forEach(function(result) {
+      var title = "GDACS " + result.properties.name;
+      var latitude = result.bbox[0];
+      var longitude = result.bbox[1];
+      var location = [longitude, latitude];
+      var iconType = result.properties.eventtype;
+      let uniqueKey = "Marker" + uniqueMarkerCounter++;
+      markerList.push({key: uniqueKey, position: location, content: title, icon:iconType});
 
-      });
+    });
 
-      this.setState({
-        lat: markerList[0]["position"][0],
-        lng: markerList[0]["position"][1],
-        zoom: 4,
-        markers: markerList}
-      );
+    this.setState({
+      lat: markerList[0]["position"][0],
+      lng: markerList[0]["position"][1],
+      zoom: 4,
+      markers: markerList}
+    );
   }
 
   populateCovid19Data(data){
-      var features = data.features;
-      let counter = 0;
+    var features = data.features;
 
-      features.forEach(function(result) {
+    features.forEach(function(result) {
+      if(result && result.geometry) {
+        var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n"
+        + " Infected: " + result.properties.Confirmed
+        + " Deaths: " + result.properties.Deaths
+        + " Recovered: " + result.properties.Recovered;
 
-        if(!result.geometry){
-          console.log(result.geometry)
-        }
-        else{
-          var title = "COVID-19 Outbreak: " + result.properties.Country_Region + "\n"
-          + " Infected: " + result.properties.Confirmed
-          + " Deaths: " + result.properties.Deaths
-          + " Recovered: " + result.properties.Recovered;
+        var latitude = result.geometry.coordinates[0];
+        var longitude = result.geometry.coordinates[1];
 
-          var latitude = result.geometry.coordinates[0];
-          var longitude = result.geometry.coordinates[1];
+        var location = [longitude, latitude];
 
-          //var latitude = result.properties.Long_;
-          //var longitude = result.properties.Lat;
-          var location = [longitude, latitude];
+        let uniqueKey = "Marker" + uniqueMarkerCounter++;
 
-          let uniqueKey = "Marker" + counter++;
+        markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
+      }
+    });
 
-          markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
-        }
-
-      });
-
-      this.setState({
-        lat: markerList[0]["position"][0],
-        lng: markerList[0]["position"][1],
-        zoom: 4,
-        markers: markerList}
-      );
-
+    this.setState({
+      lat: markerList[0]["position"][0],
+      lng: markerList[0]["position"][1],
+      zoom: 4,
+      markers: markerList}
+    );
   }
 
   async getDataAPI() {
@@ -157,7 +144,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsEarthquakes();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      //console.log(response.data);
+      // console.log(response.data);
     }
   }
 
@@ -165,7 +152,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsTropicalCyclones();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      //console.log(response.data);
+      // console.log(response.data);
     }
   }
 
@@ -173,7 +160,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsFloods();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      //console.log(response.data);
+      // console.log(response.data);
     }
   }
 
@@ -181,7 +168,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsVolcanoes();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      //console.log(response.data);
+      // console.log(response.data);
     }
   }
 
@@ -189,7 +176,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getGdacsDroughts();
     if (response !== null){
       this.populateGdacsMarkers(response.data);
-      //console.log(response.data);
+      // console.log(response.data);
     }
   }
 
@@ -197,7 +184,7 @@ class Landing extends Component<{}, State> {
     var response = await requestData.getCovid19DataByCountry();
     if (response !== null){
       this.populateCovid19Data(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     }
   }
 
@@ -206,7 +193,8 @@ class Landing extends Component<{}, State> {
     this.getGdacsEQ();
     this.getGdacsTC();
     this.getGdacsFL();
-    this.getGdacsVL();
+    // Volcano data does not seem to be available at this time
+    // this.getGdacsVL(); 
     this.getGdacsDR();
     this.getCovid19DataByCountry();
   }
