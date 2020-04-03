@@ -113,6 +113,7 @@ class Landing extends Component<{}, State> {
       let counter = 0;
 
       features.forEach(function(result) {
+
         if(!result.geometry){
           console.log(result.geometry)
         }
@@ -133,6 +134,7 @@ class Landing extends Component<{}, State> {
 
           markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
         }
+
       });
 
       this.setState({

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import requestData from './RequestData';
 
-
+import {Line} from 'react-chartjs-2';
 class CovidTable extends Component{
   constructor(props) {
     super(props);
@@ -77,6 +77,8 @@ async getCovid19DataByCountry() {
 
  render(){
     return (
+
+
       <MaterialTable
         title="Covid 19 Cases by Country"
         columns={this.state.columns}

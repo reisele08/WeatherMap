@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRouter = require('./Api/routes/Users');
 
+const coronaRouter = require('./Api/routes/CoronaData');
+
 require('dotenv/config');
 
 let testAPIRouter = require("./routes/testAPI");
@@ -18,6 +20,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/users', userRouter);
+
+app.use('/corona', coronaRouter);
 
 //For not found
 app.use((req, res, next) => {
