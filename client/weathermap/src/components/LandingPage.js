@@ -192,7 +192,8 @@ class Landing extends Component<{}, State> {
     this.getDataAPI();
     this.getGdacsEQ();
     this.getGdacsTC();
-    this.getGdacsFL();
+    // Flood data does not seem to be available at this time
+    // this.getGdacsFL();
     // Volcano data does not seem to be available at this time
     // this.getGdacsVL(); 
     this.getGdacsDR();

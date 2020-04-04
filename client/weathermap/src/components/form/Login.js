@@ -56,30 +56,28 @@ class Login extends React.Component {
         var response = await RequestServer.login(this.state.username, this.state.password);
         console.log(response);
         if(response === null){
-            alert( 'Incorrect Inputs' )
-        }else{
-            localStorage.setItem("userData", JSON.stringify(response.data))
-            localStorage.setItem("loggedIn", "true")
+            alert( 'Incorrect Inputs' );
+        } else{
+            localStorage.setItem("userData", JSON.stringify(response.data));
+            localStorage.setItem("loggedIn", "true");
             this.setRole(response)
             //this.testConsoleLog(response)
             this.props.history.push(
                 '/profile',
                 { detail: response.data.user }
-            )
-            window.location.reload()
+            );
+            // console.log(this.props);
+            window.location.reload();
 
         }
 
-
-        console.log("this is what user putted in username : " + this.state.username + " password : " + this.state.password);
-
+        // console.log("this is what user putted in username : " + this.state.username + " password : " + this.state.password);
     }
 
 
     render(){
         return(
             <div className="newForm">
-
                 <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
@@ -112,15 +110,12 @@ class Login extends React.Component {
                         errorMessages={['this field is required']}
                         variant="outlined"
                     />
-
                     <br/>
                     <br/>
                     <Button type="submit" style={{backgroundColor: 'rgba(0,0,0, 0.87)', color: 'white', margin:'10px'}}>Submit</Button>
                     <Button style={{backgroundColor: 'rgba(0,0,0, 0.87)'}}><Link to="/SignUp" style={{ color: 'white'}}>SignUp</Link></Button>
-
                     <br/>
                 </ValidatorForm>
-
             </div>
         )
     }
