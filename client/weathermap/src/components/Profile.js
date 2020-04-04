@@ -15,13 +15,18 @@ var categoryMap = {
 };
 
 class Profile extends React.Component {
-
+    state = {
+      name: '',
+      newsFeedData: [],
+    };
     constructor(props) {
         super(props);
+
         this.state = {
             name: '',
             newsFeedData: [],
         };
+        console.log(this.state.newsFeedData);
 
         if (localStorage.getItem("loggedIn") === "true") {
             let userData = JSON.parse(localStorage.getItem("userData"));
@@ -30,13 +35,14 @@ class Profile extends React.Component {
             this.state.name = firstName;
         }
 
-        if(props.location.state !== undefined){
-            this.state = {
-                name: props.location.state.detail.name,
-                email: props.location.state.detail.email,
-                username:props.location.state.detail.username
-            };
-        }
+        // if(props.location.state !== undefined){
+        //     this.state = {
+        //         name: props.location.state.detail.name,
+        //         email: props.location.state.detail.email,
+        //         username:props.location.state.detail.username,
+        //         newsFeedData: []
+        //     };
+        // }
     };
 
     processPredictHqData(data) {
@@ -50,7 +56,6 @@ class Profile extends React.Component {
           country: element.country,
         });
       });
-      // console.log(newsData.length);
     }
 
     processGdacsData(data) {
@@ -130,16 +135,11 @@ class Profile extends React.Component {
           return (b.startDate - a.startDate);
         });
 
-        console.log(sortedFeedData);
-
-
         let removedDuplicates = sortedFeedData.filter((element, index, self) =>
           index === self.findIndex((e) => (
             e.title === element.title
           ))
         );
-        console.log(removedDuplicates);
-
 
         let splicedFeed = removedDuplicates.slice(0,20);
 
