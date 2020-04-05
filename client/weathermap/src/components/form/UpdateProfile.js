@@ -3,7 +3,6 @@ import './Form.css';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import RequestServer from "../RequestServer";
-import Popup from "reactjs-popup";
 import {Link} from "react-router-dom";
 
 class UpdateProfile extends React.Component {
@@ -63,16 +62,13 @@ class UpdateProfile extends React.Component {
             alert( 'Incorrect Inputs' )
         }else{
             console.log(response)
+            localStorage.setItem("userData", JSON.stringify({user:this.state}));
             this.props.history.push(
                 '/Profile'
             )
         }
     }
 
-    changePassword(){
-
-
-    }
 
     render() {
         return(
