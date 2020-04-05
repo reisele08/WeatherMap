@@ -9,7 +9,6 @@ export default function UserNavigation() {
             <Link to="/Profile">Profile</Link>
             <Link to="/CovidTable">COVID-19 Tracker</Link>
             <Link to="/CovidStats">COVID-19 stats</Link>
-
         </Navigation>
     )
 }
