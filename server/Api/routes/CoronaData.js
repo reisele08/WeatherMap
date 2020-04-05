@@ -68,10 +68,6 @@ router.get('/canadaOnly/:province/:status', (req, res, next) => {//whole country
 
 
 
-//ITME do some bc pronvinces-> BC
-//various canada provinces.
-//Put world number at the top
-//Add more countries.
 
 //all countries "https://pomber.github.io/covid19/timeseries.json"// comparison on top ones.
 //decide whihc countries.

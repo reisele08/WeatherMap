@@ -88,7 +88,7 @@ class ApexChart extends Component {
 
         var series = {...this.state.series};
         series[0].data = controllerCall.values;
-        series[0].name = "active Cases";
+        series[0].name = this.state.status;;
 
 
         this.setState( series);
