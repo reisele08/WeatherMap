@@ -94,7 +94,7 @@ class RequestServer extends Component {
 
     async getCoronabyProvinceStatus(province, status){
         try {
-            var response = await axios.get(this.getServerLocation() + '/corona/'+ /canada/+ province+'/'+status);
+            var response = await axios.get(this.getServerLocation() + '/corona/'+ /canadaOnly/+ province+'/'+status);
             return response
         } catch (error) {
             console.log(error)

@@ -33,13 +33,15 @@ router.get('/:country/:status', (req, res, next) => {//whole country
         })
 });
 
-router.get('canada/:province/:status', (req, res, next) => {//whole country
+router.get('/canadaOnly/:province/:status', (req, res, next) => {//whole country
 
-    fetch('https://api.covid19api.com/dayone/country/canada/status/'+ req.params.status)
+    fetch('https://api.covid19api.com/dayone/country/canada/status/'+req.params.status)
         .then(response => response.json())
         .then(data => {
 
             var provinceData = data.filter(fields => fields.Province === req.params.province);
+
+
             var dates = provinceData.map(function(fields){
                 var date = fields.Date;
                 var splitdate = date.split("T");
@@ -56,8 +58,8 @@ router.get('canada/:province/:status', (req, res, next) => {//whole country
                 values
             }
             res.json(pair);
-            //res.json("looking corona path")
-            console.log(pair);
+
+            //console.log(pair);
         })
         .catch(err => {
             console.log("could not get data")

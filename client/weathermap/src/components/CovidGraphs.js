@@ -4,6 +4,10 @@ import Chart from 'react-apexcharts';
 
 import requestServer from "./RequestServer";
 import {Button,UncontrolledButtonDropdown,ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
+
+import {Navigation} from 'react-mdl';
+import {Link} from 'react-router-dom';
+
 //
 class ApexChart extends Component {
     constructor(props) {
@@ -121,16 +125,7 @@ class ApexChart extends Component {
 
     }
 
-    setProvince(province){
-        this.setState(state => ({ province: province  }));
-
-    }
-    setStatusProv(statusProv) {
-        this.setState(state => ({ statusProvince:statusProv}));
-
-    }
-
-
+    
 
     render() {
         let graph;//conditions?
@@ -139,7 +134,7 @@ class ApexChart extends Component {
         return (
             <div id="chart">
 
-             
+                {/************** Country drop down*/}
 
 
                 <UncontrolledButtonDropdown>
@@ -154,11 +149,14 @@ class ApexChart extends Component {
                         <DropdownItem onClick={() => this.setCountry("korea-south")}>S.Korea</DropdownItem>
 
                         <DropdownItem onClick={() => this.setCountry("Austria")}>Austria</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Belgium")}>BelGium</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Brazil")}>Brazil</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("France")}>France</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("Germany")}>Germany</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("Italy")}>Italy</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("Iran")}>Iran</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("Spain")}>Spain</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Switzerland")}>Switzerland</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("United-Kingdom")}>UK</DropdownItem>
 
 
@@ -180,6 +178,7 @@ class ApexChart extends Component {
                 </UncontrolledButtonDropdown>
 
                 <Button color="primary" onClick={() => this.handleSubmit()}>{this.state.go}</Button>{' '}
+                <Link  to="/CovidStatsCanada">Canada search</Link>
                 {this.state.showGraph ?
                     <Chart options = {this.state.options} series = {this.state.series} type="line" height={350} /> :
                     null
