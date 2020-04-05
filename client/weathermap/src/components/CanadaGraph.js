@@ -86,7 +86,7 @@ class CanadaCovid extends Component {
 
         var series = {...this.state.series};
         series[0].data = controllerCall.values;
-        series[0].name = "active Cases";
+        series[0].name = this.state.status;
 
 
         this.setState( series);
@@ -107,7 +107,7 @@ class CanadaCovid extends Component {
 
 
         var options = {...this.state.options};
-        options.title.text = this.state.country + " " + this.state.status;
+        options.title.text = this.state.province + " " + this.state.status;
 
         this.setState( options);
 
