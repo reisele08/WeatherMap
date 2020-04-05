@@ -104,6 +104,14 @@ router.post("/poststatus", (req, res, next) => {
         .catch(err => console.log(err));
 });
 
+router.get('/getstatus', (req, res, next) => {
+    console.log("called")
+    Status.find()
+        .exec()
+        .then(postList => res.status(200).json(postList))
+        .catch(err => res.status(500).json({ error: err }));
+});
+
 // //find by _id
 // router.get('/:id', (req, res, next) => {
 //     const id = req.params.id;

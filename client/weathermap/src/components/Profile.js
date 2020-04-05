@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import requestData from './RequestData';
+import requestServer from "./RequestServer";
 import { Container, Row, Col } from 'reactstrap';
 import '../App.css';
 
@@ -18,6 +19,7 @@ class Profile extends React.Component {
     state = {
       name: '',
       newsFeedData: [],
+      status: []
     };
     constructor(props) {
         super(props);
@@ -25,6 +27,7 @@ class Profile extends React.Component {
         this.state = {
             name: '',
             newsFeedData: [],
+            status: []
         };
         console.log(this.state.newsFeedData);
 
@@ -146,9 +149,20 @@ class Profile extends React.Component {
         let userData = JSON.parse(localStorage.getItem("userData"));
         let userName = userData.user.name;
         let firstName = userName.substr(0, userName.indexOf(" "));
+        
+        let response = await requestServer.getStatus();
+        //console.log((response.data)[1].text);
+        console.log(response.data.length)
+        var statusfeed = []
+        for (var i = 0; i < response.data.length; i++) {
+          console.log((response.data)[i].text)
+          statusfeed.push(<p>{(response.data)[i].text}</p>)
+        }
+
         this.setState({
           name: firstName,
-          newsFeedData: splicedFeed
+          newsFeedData: splicedFeed,
+          status: statusfeed
         })
       }
     }
@@ -165,6 +179,8 @@ class Profile extends React.Component {
               <h1 className="margin-bottom-medium">Welcome back, {this.state.name}!</h1>
               <div className="center">
                 <img className="img" src="usericon.jpg" alt="profile"></img>
+                <h2>Status:</h2>
+                {this.state.status}
               </div>
             </Col>
             <Col xs="8">
@@ -180,6 +196,7 @@ class Profile extends React.Component {
                   </li>
                 ))}
               </ul>
+
             </Col>
           </Row>
         </Container>
