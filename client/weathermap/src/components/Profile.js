@@ -3,6 +3,9 @@ import requestData from './RequestData';
 import requestServer from "./RequestServer";
 import { Container, Row, Col } from 'reactstrap';
 import '../App.css';
+import Button from '@material-ui/core/Button';
+import {Link} from "react-router-dom";
+
 
 let newsData = [];
 let uniqueKey = 0;
@@ -38,14 +41,6 @@ class Profile extends React.Component {
             this.state.name = firstName;
         }
 
-        // if(props.location.state !== undefined){
-        //     this.state = {
-        //         name: props.location.state.detail.name,
-        //         email: props.location.state.detail.email,
-        //         username:props.location.state.detail.username,
-        //         newsFeedData: []
-        //     };
-        // }
     };
 
     processPredictHqData(data) {
@@ -179,9 +174,15 @@ class Profile extends React.Component {
               <h1 className="margin-bottom-medium">Welcome back, {this.state.name}!</h1>
               <div className="center">
                 <img className="img" src="usericon.jpg" alt="profile"></img>
+                <br/>
+                <br/>
+                <Button style={{backgroundColor: 'rgba(0,0,0, 0.87)'}}> <Link to="/updateProfile" style={{color:"white"}}>Update Profile</Link> </Button>
+                <br/>
+                <br/>
                 <h2>Status:</h2>
                 {this.state.status}
               </div>
+
             </Col>
             <Col xs="8">
               <h1 className="center margin-bottom-medium">Latest News: Top 20</h1>

@@ -80,6 +80,37 @@ class RequestServer extends Component {
 
     }
 
+    async updateProfile(user){
+        try {
+            var response = await axios.post(this.getServerLocation() + '/users/updateProfile/', user)
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+
+    }
+
+    async updatePassword(user){
+        let checkValidation = await this.login(user.username, user.password);
+        console.log('checkValidation');
+
+        console.log(checkValidation);
+        if(checkValidation === null){
+            return null
+        }else{
+            try {
+                var response = await axios.post(this.getServerLocation() + '/users/updatePassword/', user)
+                return response
+            } catch (error) {
+                console.log(error);
+                return null
+            }
+        }
+
+
+    }
+
     async postStatus(text) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/poststatus', text)
