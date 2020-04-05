@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/UserModel');
+const Status = require('../models/statusModel');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -109,6 +110,18 @@ router.delete('/delete/:id', (req, res, next) => {
         .catch(err => res.status(500).json({ error: err }));
 });
 
+
+router.post("/poststatus", (req, res, next) => {
+    console.log(req.body.text)
+    const status = new Status({
+        _id: new mongoose.Types.ObjectId(),
+        text: req.body.text
+    });
+    status
+        .save()
+        .then(result=>console.log(result))
+        .catch(err => console.log(err));
+});
 
 // //find by _id
 // router.get('/:id', (req, res, next) => {

@@ -10,6 +10,7 @@ import CovidTable from "./CovidTable";
 import Canada from "./CovidGraphs";
 import UpdateProfile from "./form/UpdateProfile";
 import UpdatePassword from './form/UpdatePassword';
+import PostStatus from "./PostStatus";
 
 
 
@@ -26,7 +27,7 @@ class RouterTable extends Component {
         <Route path = "/UpdatePassword" component = {UpdatePassword} />
         <Route path = "/CovidTable" component = {CovidTable} />
         <Route path = "/CovidStats" component = {Canada} />
-
+        <Route path = "/PostStatus" component = {PostStatus} />
         </Switch>
 
     return jsx;
