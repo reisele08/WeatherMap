@@ -12,7 +12,7 @@ export default function UserNavigation() {
             <Link to = "/">Home</Link>
             <Link to="/login">Login</Link>
             <Link to="/CovidTable">COVID-19 Tracker</Link>
-            <Link to="/CovidStats">COVID-19 Stats</Link>
+            <Link to="/CovidStatsWorld">COVID-19 Stats</Link>
 
             </Navigation>
 
