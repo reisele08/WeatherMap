@@ -107,7 +107,7 @@ class CanadaCovid extends Component {
 
 
         var options = {...this.state.options};
-        options.title.text = this.state.country + " " + this.state.status;
+        options.title.text = this.state.province + " " + this.state.status;
 
         this.setState( options);
 
