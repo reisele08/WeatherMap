@@ -80,6 +80,15 @@ class RequestServer extends Component {
 
     }
 
+    async postStatus(text) {
+        try {
+            var response = await axios.post(this.getServerLocation() + '/users/poststatus', text)
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
 
     async GetCoronabyCountryStatus(country,status){
         try {
