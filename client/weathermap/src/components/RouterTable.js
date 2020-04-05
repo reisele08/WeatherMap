@@ -8,6 +8,8 @@ import SignUp from './form/SignUp';
 import Profile from "./Profile";
 import CovidTable from "./CovidTable";
 import Canada from "./CovidGraphs";
+import UpdateProfile from "./form/UpdateProfile";
+import UpdatePassword from './form/UpdatePassword';
 
 
 
@@ -20,6 +22,8 @@ class RouterTable extends Component {
         <Route path = "/UserList" component = {UserList} />
         <Route path = "/SignUp" component = {SignUp} />
         <Route path = "/Profile" component = {Profile} />
+        <Route path = "/UpdateProfile" component = {UpdateProfile} />
+        <Route path = "/UpdatePassword" component = {UpdatePassword} />
         <Route path = "/CovidTable" component = {CovidTable} />
         <Route path = "/CovidStats" component = {Canada} />
 
