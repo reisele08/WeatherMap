@@ -5,12 +5,12 @@ import {Link} from 'react-router-dom';
 export default function UserNavigation() {
     return (
         <Navigation>
-            <Link to = "/">Home</Link>
+            <Link to="/">Map</Link>
             <Link to="/Profile">Profile</Link>
             <Link to="/CovidTable">COVID-19 Tracker</Link>
-            <Link to="/CovidStatsWorld">COVID-19 stats</Link>
+            <Link to="/CovidStatsWorld">COVID-19 Stats</Link>
             <Link to="/PostStatus">Post Status</Link>
-
+        	<Link to="/Logout">Logout</Link>
         </Navigation>
     )
 }

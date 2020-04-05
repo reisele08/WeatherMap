@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import requestData from './RequestData';
+import requestServer from "./RequestServer";
 import { Container, Row, Col } from 'reactstrap';
 import '../App.css';
 import Button from '@material-ui/core/Button';
@@ -21,6 +22,7 @@ class Profile extends React.Component {
     state = {
       name: '',
       newsFeedData: [],
+      status: []
     };
     constructor(props) {
         super(props);
@@ -28,6 +30,7 @@ class Profile extends React.Component {
         this.state = {
             name: '',
             newsFeedData: [],
+            status: []
         };
         console.log(this.state.newsFeedData);
 
@@ -141,9 +144,23 @@ class Profile extends React.Component {
         let userData = JSON.parse(localStorage.getItem("userData"));
         let userName = userData.user.name;
         let firstName = userName.substr(0, userName.indexOf(" "));
+        
+        let response = await requestServer.getStatus();
+        //console.log((response.data)[1].text);
+        // console.log(response.data.length);
+        var statusfeed = []
+        for (var i = 0; i < response.data.length; i++) {
+          // console.log((response.data)[i].text)
+          statusfeed.push(<p key={"Status:" + i}>{(response.data)[i].text}</p>)
+        }
+        statusfeed = statusfeed.reverse();
+
+
+
         this.setState({
           name: firstName,
-          newsFeedData: splicedFeed
+          newsFeedData: splicedFeed,
+          status: statusfeed
         })
       }
     }
@@ -163,6 +180,10 @@ class Profile extends React.Component {
                 <br/>
                 <br/>
                 <Button style={{backgroundColor: 'rgba(0,0,0, 0.87)'}}> <Link to="/updateProfile" style={{color:"white"}}>Update Profile</Link> </Button>
+                <br/>
+                <br/>
+                <h2>Status:</h2>
+                {this.state.status}
               </div>
 
             </Col>
@@ -179,6 +200,7 @@ class Profile extends React.Component {
                   </li>
                 ))}
               </ul>
+
             </Col>
           </Row>
         </Container>

@@ -9,11 +9,10 @@ export default function UserNavigation() {
 
         <div>
             <Navigation>
-            <Link to = "/">Home</Link>
+            <Link to="/">Map</Link>
             <Link to="/login">Login</Link>
             <Link to="/CovidTable">COVID-19 Tracker</Link>
             <Link to="/CovidStatsWorld">COVID-19 Stats</Link>
-
             </Navigation>
 
         </div>
