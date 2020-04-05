@@ -11,7 +11,6 @@ export default function AdminNavigation() {
             <Link to="/CovidTable">COVID-19 Tracker</Link>
             <Link to="/CovidStatsWorld">COVID-19 Stats</Link>
 
-
         </Navigation>
     )
 }

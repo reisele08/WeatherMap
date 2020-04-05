@@ -8,8 +8,8 @@ export default function UserNavigation() {
             <Link to = "/">Home</Link>
             <Link to="/Profile">Profile</Link>
             <Link to="/CovidTable">COVID-19 Tracker</Link>
-
             <Link to="/CovidStatsWorld">COVID-19 stats</Link>
+            <Link to="/PostStatus">Post Status</Link>
 
         </Navigation>
     )

@@ -132,3 +132,19 @@
 .title {
   color: black;
 }
+
+.center {
+  text-align: center;
+}
+
+.margin-top {
+  margin-top: 24px;
+}
+
+.margin-bottom-medium {
+  margin-bottom: 24px;
+}
+
+.margin-bottom-half {
+  margin-bottom: 0.5rem;
+}

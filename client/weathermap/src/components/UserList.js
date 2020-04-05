@@ -107,7 +107,7 @@ export default function MaterialTableDemo() {
         columns={this.state.columns}
         data={this.state.data}
         editable={{
-         isEditable: rowData => rowData.role === "USER", // only name(a) rows would be editable
+         // isEditable: rowData => rowData.role === "USER", // only name(a) rows would be editable
          isDeletable: rowData => rowData.role === "USER", // only name(a) rows would be deletable
 
              /*
@@ -136,7 +136,7 @@ export default function MaterialTableDemo() {
                     return { ...prevState, data };
                   });
                 }
-              }, 600);
+              }, 3000);
             }),
 
           onRowDelete: oldData =>
@@ -151,7 +151,7 @@ export default function MaterialTableDemo() {
                         return { ...prevState, data };
                     });
                 }
-              }, 700);
+              }, 3000);
             })
         }}
       />

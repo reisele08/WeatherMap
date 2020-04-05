@@ -13,7 +13,7 @@ class Login extends React.Component {
         this.state = {
             username: '',
             password: '',
-            isAdmin: false      // Not used, may use in the future if localStorage causes issues
+            isAdmin: false   // Not used, may use in the future if localStorage causes issues
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -29,15 +29,18 @@ class Login extends React.Component {
             this.setState({
                 isAdmin: false
             })
+            console.log('this is local storage')
+            console.log(localStorage);
             localStorage.setItem("isAdmin", "false")
         }
-}
+    }
 
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         })
     }
+
     testConsoleLog(response) {
         var user = localStorage.getItem("userData")
         var admin = localStorage.getItem("isAdmin")
@@ -48,6 +51,7 @@ class Login extends React.Component {
         console.log("admin??: " + admin)
 
     }
+
     handleSubmit = async () => {
         //input validation
         //access to db and check if the inputs are correct or not
@@ -56,39 +60,33 @@ class Login extends React.Component {
         var response = await RequestServer.login(this.state.username, this.state.password);
         console.log(response);
         if(response === null){
-            alert( 'Incorrect Inputs' )
-        }else{
-            localStorage.setItem("userData", JSON.stringify(response.data))
-            localStorage.setItem("loggedIn", "true")
+            alert( 'Incorrect Inputs' );
+        } else{
+            localStorage.setItem("userData", JSON.stringify(response.data));
+            localStorage.setItem("loggedIn", "true");
             this.setRole(response)
-            //this.testConsoleLog(response)
             this.props.history.push(
-                '/profile',
+                '/Profile',
                 { detail: response.data.user }
-            )
-            window.location.reload()
+            );
+
+            window.location.reload();
 
         }
 
-
-        console.log("this is what user putted in username : " + this.state.username + " password : " + this.state.password);
-
+        // console.log("this is what user putted in username : " + this.state.username + " password : " + this.state.password);
     }
 
 
     render(){
         return(
             <div className="newForm">
-
                 <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}
                     style={{
-                        backgroundColor: 'white',
-                            margin : 'auto',
-                            padding : '20px',
-                            textAlign: 'center'
+                        backgroundColor: 'white', margin : 'auto', padding : '20px', textAlign: 'center'
                     }}
                 >
                     <TextValidator
@@ -112,15 +110,12 @@ class Login extends React.Component {
                         errorMessages={['this field is required']}
                         variant="outlined"
                     />
-
                     <br/>
                     <br/>
                     <Button type="submit" style={{backgroundColor: 'rgba(0,0,0, 0.87)', color: 'white', margin:'10px'}}>Submit</Button>
                     <Button style={{backgroundColor: 'rgba(0,0,0, 0.87)'}}><Link to="/SignUp" style={{ color: 'white'}}>SignUp</Link></Button>
-
                     <br/>
                 </ValidatorForm>
-
             </div>
         )
     }

@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/UserModel');
+const Status = require('../models/statusModel');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -80,6 +81,25 @@ router.post('/update/', (req, res, next) => {
         .catch(err =>  res.status(500).json({ error: err }))
 });
 
+
+router.post('/updateProfile/', (req, res, next) => {
+    User.updateOne({username:req.body.username}, { $set:{name: req.body.name, email:req.body.email}})
+        .exec()
+        .then(user =>  res.status(200).json({ message: 'Update Successful', user:user}))
+        .catch(err =>  res.status(500).json({ error: err }))
+});
+
+
+router.post('/updatePassword/', (req, res, next) => {
+    const hashedPW = bcrypt.hashSync(req.body.newPassword, saltRounds);
+    User.updateOne({username:req.body.username}, { $set:{password: hashedPW}})
+        .exec()
+        .then(user =>  res.status(200).json({ message: 'Update Successful', user:user}))
+        .catch(err =>  res.status(500).json({ error: err }))
+});
+
+
+
 router.delete('/delete/:id', (req, res, next) => {
     const id = req.params.id;
     User.remove({ _id: id })
@@ -90,6 +110,18 @@ router.delete('/delete/:id', (req, res, next) => {
         .catch(err => res.status(500).json({ error: err }));
 });
 
+
+router.post("/poststatus", (req, res, next) => {
+    console.log(req.body.text)
+    const status = new Status({
+        _id: new mongoose.Types.ObjectId(),
+        text: req.body.text
+    });
+    status
+        .save()
+        .then(result=>console.log(result))
+        .catch(err => console.log(err));
+});
 
 // //find by _id
 // router.get('/:id', (req, res, next) => {
@@ -117,7 +149,7 @@ router.get('/find/:username', (req, res, next) => {
         .exec()
         .then(user => {
             if (user) {
-                res.status(200).json({message: 'User exists' });
+                res.status(200).json({message: 'User exists', data:user});
             } else {
                 res.status(404).json({ message: 'User not found' });
             }
