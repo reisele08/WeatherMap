@@ -147,12 +147,15 @@ class Profile extends React.Component {
         
         let response = await requestServer.getStatus();
         //console.log((response.data)[1].text);
-        console.log(response.data.length)
+        // console.log(response.data.length);
         var statusfeed = []
         for (var i = 0; i < response.data.length; i++) {
-          console.log((response.data)[i].text)
-          statusfeed.push(<p>{(response.data)[i].text}</p>)
+          // console.log((response.data)[i].text)
+          statusfeed.push(<p key={"Status:" + i}>{(response.data)[i].text}</p>)
         }
+        statusfeed = statusfeed.reverse();
+
+
 
         this.setState({
           name: firstName,
