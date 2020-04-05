@@ -29,6 +29,8 @@ class Login extends React.Component {
             this.setState({
                 isAdmin: false
             })
+            console.log('this is local storage')
+            console.log(localStorage);
             localStorage.setItem("isAdmin", "false")
         }
     }
@@ -84,10 +86,7 @@ class Login extends React.Component {
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}
                     style={{
-                        backgroundColor: 'white',
-                            margin : 'auto',
-                            padding : '20px',
-                            textAlign: 'center'
+                        backgroundColor: 'white', margin : 'auto', padding : '20px', textAlign: 'center'
                     }}
                 >
                     <TextValidator
