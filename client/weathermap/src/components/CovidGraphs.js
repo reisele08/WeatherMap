@@ -4,6 +4,10 @@ import Chart from 'react-apexcharts';
 
 import requestServer from "./RequestServer";
 import {Button,UncontrolledButtonDropdown,ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
+
+import {Navigation} from 'react-mdl';
+import {Link} from 'react-router-dom';
+
 //
 class ApexChart extends Component {
     constructor(props) {
@@ -16,8 +20,12 @@ class ApexChart extends Component {
         this.setCountry = this.setCountry.bind(this);
         this.setStatus = this.setStatus.bind(this);
         this.state = {
-
+                go: "go",
+                goProv: "go",
                 showGraph: false,
+                showGraphProv: false,
+                statusProvince:"Select Status",
+                province: "Select Province",
                 country:"Select Country",
                 status:"Select Status",
                 series: [{
@@ -64,66 +72,60 @@ class ApexChart extends Component {
     }
     async getData(country,status) {//button onclick the make a request to something.
 
-        var response = await requestServer.GetCoronabyCountryStatus(country, status);
+        var response = await requestServer.getCoronaByCountryStatus(country, status);
         console.log(response.data);
         this.updateGraphData(response.data)
     }
 
-    formatDate(dateTimeArray) {
-        var formated = [];
 
-        var formatedTime = dateTimeArray.map(function(date) {
-            var splitdate = date.split("T");
-
-            var formated = splitdate[0].replace(/-/g,"/");
-            return formated;
-        });
-
-        console.log(formatedTime)
-        return formatedTime;
-
-    }
     updateGraphData(controllerCall) {
 
         var options = {...this.state.options};
-        options.xaxis.categories = this.formatDate(controllerCall.dates);
+        //options.xaxis.categories = this.formatDate(controllerCall.dates);
+        options.xaxis.categories = controllerCall.dates;
+
         this.setState( options);
 
         var series = {...this.state.series};
         series[0].data = controllerCall.values;
         series[0].name = "active Cases";
 
-        this.setState(series);
+
+        this.setState( series);
+
+        this.setState(state => ({ showGraph: !state.showGraph    }))
 
     }
-
 
 
     handleSubmit() {
 
         this.getData(this.state.country,this.state.status);
-        this.setState(state => ({ showGraph: !state.showGraph    }))
+        if(this.state.go === "reset") {
+            this.setState(state => ({go: "go"}));
+        }else if (this.state.go === "go" ) {
+            this.setState(state => ({go: "reset"}));
+        }
+
 
         var options = {...this.state.options};
         options.title.text = this.state.country + " " + this.state.status;
 
-        this.setState(options);
+        this.setState( options);
+        //await this.sleep(3000);
+
     }
 
     setCountry(countryName){
         this.setState(state => ({ country: countryName  }));
 
-
-
     }
     setStatus(statusType) {
-        this.setState(state => ({ status: statusType  }));
-
-
+        this.setState(state => ({ status:statusType}));
 
     }
 
-
+    
 
     render() {
         let graph;//conditions?
@@ -133,6 +135,8 @@ class ApexChart extends Component {
             <div id="chart">
 
                 {/************** Country drop down*/}
+
+
                 <UncontrolledButtonDropdown>
                     <DropdownToggle caret>
                         {this.state.country}
@@ -141,13 +145,20 @@ class ApexChart extends Component {
                     <DropdownMenu right>
                         <DropdownItem onClick={() => this.setCountry("Canada") }>Canada</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("US")}>US</DropdownItem>
-                        <DropdownItem onClick={() => this.setCountry("Italy")}>Italy</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("China")}>China</DropdownItem>
-                        <DropdownItem onClick={() => this.setCountry("Korea")}>Korea</DropdownItem>
-                        <DropdownItem onClick={() => this.setCountry("Spain")}>Spain</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("korea-south")}>S.Korea</DropdownItem>
+
                         <DropdownItem onClick={() => this.setCountry("Austria")}>Austria</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Belgium")}>BelGium</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Brazil")}>Brazil</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("France")}>France</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Germany")}>Germany</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Italy")}>Italy</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Iran")}>Iran</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Spain")}>Spain</DropdownItem>
+                        <DropdownItem onClick={() => this.setCountry("Switzerland")}>Switzerland</DropdownItem>
                         <DropdownItem onClick={() => this.setCountry("United-Kingdom")}>UK</DropdownItem>
-                         
+
 
                         <DropdownItem> </DropdownItem>
                     </DropdownMenu>
@@ -166,8 +177,8 @@ class ApexChart extends Component {
                     </DropdownMenu>
                 </UncontrolledButtonDropdown>
 
-                <Button color="primary" onClick={() => this.handleSubmit()}>Go</Button>{' '}
-
+                <Button color="primary" onClick={() => this.handleSubmit()}>{this.state.go}</Button>{' '}
+                <Link  to="/CovidStatsCanada">Canada search</Link>
                 {this.state.showGraph ?
                     <Chart options = {this.state.options} series = {this.state.series} type="line" height={350} /> :
                     null
