@@ -28,6 +28,15 @@ var blueIcon = new L.Icon({
 });
 
 var yellowIcon = new L.Icon({
+    iconUrl: require('./images/warning.png'),
+    shadowUrl: null,
+    iconSize: [41, 41],
+    iconAnchor: [41, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+var covidIcon = new L.Icon({
     iconUrl: require('./images/covid.png'),
     shadowUrl: null,
     iconSize: [41, 41],
@@ -55,4 +64,4 @@ var greyIcon = new L.Icon({
 });
 
 
-export { blackIcon,blueIcon,greenIcon,greyIcon,redIcon,yellowIcon};
+export { blackIcon,blueIcon,greenIcon,greyIcon,redIcon,yellowIcon, covidIcon};
