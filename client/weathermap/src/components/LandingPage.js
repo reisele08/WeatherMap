@@ -3,7 +3,7 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from 'axios';
 import requestData from './RequestData';
 import L from 'leaflet';
-import { yellowIcon, blueIcon, blackIcon, greenIcon, redIcon, greyIcon} from './icon';
+import { yellowIcon, blueIcon, blackIcon, greenIcon, redIcon, greyIcon, covidIcon} from './icon';
 import CovidTable from './CovidTable';
 
 // Types
@@ -15,7 +15,8 @@ var iconObject = {
   TC:greenIcon,
   FL:blueIcon,
   VL:redIcon,
-  DR:greyIcon
+  DR:greyIcon,
+  COVID:covidIcon
 };
 
 type Props = {|
@@ -121,7 +122,7 @@ class Landing extends Component<{}, State> {
 
         let uniqueKey = "Marker" + uniqueMarkerCounter++;
 
-        markerList.push({key: uniqueKey, position: location, content: title, icon:'DE'});
+        markerList.push({key: uniqueKey, position: location, content: title, icon:'COVID'});
       }
     });
 

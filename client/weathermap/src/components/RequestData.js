@@ -10,7 +10,7 @@ class RequestData extends Component {
                 headers: {'Authorization': 'Bearer 49M4VW1ePbphHDcrVC34sHD-PFaD1XbM1MSTV07_'}
             };
             var response = await axios.get("https://api.predicthq.com/v1/events/?category=severe-weather,disasters,terror&limit=50", axiosOptions);
-            // console.log(response);
+            console.log(response);
             return response;
         } catch (error) {
             return null;
